@@ -1,0 +1,10 @@
+name: ai_proxy
+description: MetroMitra AI proxy. Holds the LLM key server-side; the app never talks to a model vendor directly (docs/ai.md).
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.1
+
+dev_dependencies:
+  test: ^1.25.0

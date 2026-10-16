@@ -1,0 +1,74 @@
+# Source configuration for tools/data_pipeline (M2).
+# Everything source-specific lives here (not in Dart code): endpoints, queries,
+# licences, attribution, thresholds. Licensing is a RELEASE GATE: a dataset
+# built from these sources must not be published until docs/decisions.md
+# OPEN-2 and the OTD/DMRC permission item are resolved.
+
+dataset:
+  city: delhi-ncr
+  bbox: "28.2,76.7,28.95,77.7" # minLat,minLng,maxLat,maxLng (same as the queries)
+  # Stops of one line with the same name must lie within this spread (m).
+  max_cluster_spread_m: 800
+  # OSM vs Wikidata coordinates further apart than this are reported (m).
+  coordinate_conflict_m: 250
+  # Same-name stations of different lines closer than this are listed as
+  # interchange candidates (never merged automatically).
+  merge_candidate_radius_m: 500
+  curated_overlay: data/curated/overlays.yaml
+
+fetch:
+  max_attempts: 3
+  base_delay_s: 30
+  max_delay_s: 300
+  max_slot_wait_s: 120
+  request_timeout_s: 150
+  # A fetch returning less than this share of the previous record count is
+  # rejected (guards against partial/empty responses replacing good data).
+  min_shrink_ratio: 0.5
+
+remote:
+  - id: osm-overpass
+    kind: overpass
+    name: "OpenStreetMap contributors (Overpass API)"
+    license: ODbL-1.0
+    license_url: https://opendatacommons.org/licenses/odbl/1-0/
+    attribution: "Map and station data (c) OpenStreetMap contributors, available under the Open Database Licence (ODbL)."
+    endpoints:
+      - https://overpass-api.de/api/interpreter
+    query_file: data/sources/queries/osm_subway_routes.overpassql
+    # Only relations whose network tag equals this are used.
+    network: "Delhi Metro"
+    min_records: 20
+  - id: wikidata
+    kind: sparql
+    name: "Wikidata (SPARQL)"
+    license: CC0-1.0
+    license_url: https://creativecommons.org/publicdomain/zero/1.0/
+    attribution: "Includes data from Wikidata (CC0)."
+    endpoint: https://query.wikidata.org/sparql
+    query_file: data/sources/queries/wikidata_metro_stations.rq
+    min_records: 50
+
+local:
+  - id: mitra-curated
+    name: "MetroMitra curated overlays"
+    license: "Project-owned (publication licence undecided - OPEN-2)"
+    notes: "Hand-maintained corrections; every entry carries reason, source and verified_on."
+  - id: mitra-derived
+    name: "MetroMitra pipeline derivation"
+    license: "Derived from the sources above"
+    notes: "Values computed by the pipeline, never imported: straight-line station distances (haversine), interchange rows implied by merged stations. Travel times are NOT derived (unknown)."
+
+# Deterministic text normalisation applied before comparing/filling names.
+# Display values keep the source text apart from whitespace; suffixes are only
+# stripped from Wikidata labels, and every stripped value is marked
+# `normalized` in the origin table.
+normalization:
+  strip_suffixes_en:
+    - " metro station"
+  strip_suffixes_hi:
+    - " मेट्रो स्टेशन"
+    - ", दिल्ली"
+  # Only used to detect interchange candidates: OSM names stops that share a
+  # name across lines like "Azadpur (Pink Line)". Never changes display names.
+  candidate_strip_pattern: '\s*\([^)]*Line\)\s*$'

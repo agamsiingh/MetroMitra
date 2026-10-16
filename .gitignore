@@ -1,0 +1,21 @@
+.dart_tool/
+build/
+.idea/
+*.iml
+.flutter-plugins*
+local.properties
+*.keystore
+*.jks
+key.properties
+# Generated dataset + raw downloads (lock file kept)
+data/cache/*
+!data/cache/.gitkeep
+!data/cache/sources.lock.json
+app/assets/data/metro.sqlite
+app/assets/data/metro.manifest.json
+*.g.dart
+app/lib/app/l10n/generated/
+
+# DMRC map PDF: licensing not cleared, never publish (docs/known-issues.md)
+app/assets/brand/dmrc_map.pdf
+map/personal-dmrc-based/

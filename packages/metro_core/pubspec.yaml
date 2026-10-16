@@ -1,0 +1,14 @@
+name: metro_core
+description: Pure-Dart MetroMitra domain (models, dataset, routing, fare, search, assistant). No Flutter.
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.1
+
+dev_dependencies:
+  test: ^1.25.0
+dependencies:
+  cryptography: ^2.9.0
+  sqlite3: ^3.5.2
+  yaml: ^3.1.4

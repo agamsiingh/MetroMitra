@@ -1,0 +1,70 @@
+# Table-driven search expectations over the synthetic TEST network defined in
+# test/support/search_net.dart (invented names; NOT real metro data).
+# Keys: q (query), top (expected first station/line id), tier (its match tier),
+# field (matched field), order (ids that must appear first, in this order),
+# absent (ids that must not appear), empty (true = no results), scope.
+cases:
+  # exact names, any case/spacing
+  - { q: "Raghav Chowk", top: raghav-chowk, tier: exact, field: nameEn }
+  - { q: "RAGHAV   CHOWK", top: raghav-chowk, tier: exact }
+  - { q: "raghav-chowk metro station", top: raghav-chowk, tier: exact }
+  - { q: "राघव चौक", top: raghav-chowk, tier: exact, field: nameHi }
+  - { q: "Kamal", top: kamal, tier: exact }
+  - { q: "कमल", top: kamal, tier: exact }
+  # ranking
+  - { q: "kamal", order: [kamal, zed-square, kamal-nagar, kamal-nagar-ext, nagar-kamal-park] }
+  - { q: "कमल", order: [kamal, kamal-nagar, kamla-gate, nagar-kamal-park] }
+  # partial
+  - { q: "ragh", top: raghav-chowk, tier: prefix }
+  - { q: "raghav ch", top: raghav-chowk, tier: prefix }
+  - { q: "राघ", top: raghav-chowk, tier: prefix }
+  - { q: "uttam nagar e", top: uttam-nagar-east, tier: prefix }
+  - { q: "chowk", top: ifko-chowk, tier: substring }
+  - { q: "east uttam", top: uttam-nagar-east, tier: substring }
+  # typos and spelling variants
+  - { q: "raghav chowq", top: raghav-chowk, tier: fuzzy }
+  - { q: "ragahv chowk", top: raghav-chowk, tier: fuzzy }
+  - { q: "ragav chok", top: raghav-chowk, tier: fuzzy }
+  - { q: "raghaw", top: raghav-chowk, tier: fuzzy }
+  - { q: "sunder nagar", top: sundar-nagar, tier: fuzzy }
+  - { q: "sundr nagar", top: sundar-nagar, tier: fuzzy }
+  - { q: "सूंदर नगर", top: sundar-nagar }
+  - { q: "सुन्दर नगर", top: sundar-nagar }
+  - { q: "jornagar", top: jor-nagar, tier: fuzzy }
+  # aliases, old names, misspellings, landmarks
+  - { q: "old kamla", top: kamla-gate, tier: alias, field: oldName }
+  - { q: "kamla gat", top: kamla-gate, tier: alias, field: misspelling }
+  - { q: "landmark mall", top: laxmi-nagar, tier: alias, field: landmark }
+  - { q: "इफ्को चौक", top: ifko-chowk, tier: alias }
+  - { q: "इफको चौक", top: ifko-chowk }
+  # codes
+  - { q: "RGV", top: raghav-chowk, tier: alias, field: stationCode }
+  - { q: "kmg", top: kamla-gate, tier: alias, field: stationCode }
+  - { q: "nksp", top: n-k-s-p, tier: exact }
+  # abbreviations, numerals, punctuation
+  - { q: "vihar sec 21", top: vihar-sector-21, tier: exact }
+  - { q: "विहार सेक्टर २१", top: vihar-sector-21, tier: exact }
+  - { q: "mayur kunj 1", top: mayur-kunj-i, tier: exact }
+  - { q: "Mayur Kunj - II", top: mayur-kunj-ii, tier: exact }
+  - { q: "N.K.S.P.", top: n-k-s-p, tier: exact }
+  # Hindi query reaches a station whose Hindi name is not in the data
+  - { q: "ऑर्किड पार्क", top: orchid-park, tier: fuzzy }
+  # lines
+  - { q: "test blue line", top: l-blue, tier: exact }
+  - { q: "TB", top: l-blue, tier: alias, field: lineShortName }
+  - { q: "टेस्ट लाल लाइन", top: l-red, tier: exact, scope: all }
+  - { q: "red", top: l-red, scope: lines }
+  # hidden / filtered
+  - { q: "closed halt", empty: true }
+  - { q: "old line", empty: true }
+  - { q: "kamal", absent: [closed-halt, uttam-nagar-east] }
+  # nothing may match
+  - { q: "", empty: true }
+  - { q: "   ", empty: true }
+  - { q: "!!!", empty: true }
+  - { q: "qqqqqq", empty: true }
+  - { q: "zzzzzzzzzz", empty: true }
+  - { q: "xyzzy plugh", empty: true }
+  - { q: "12345", empty: true }
+  - { q: "ऋऋऋऋ", empty: true }
+  - { q: "xq", empty: true }

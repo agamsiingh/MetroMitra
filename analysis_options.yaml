@@ -1,0 +1,17 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/build/**"
+    - "**/l10n/generated/**"
+    - "**/*.g.dart"
+
+linter:
+  rules:
+    # Style-only rules relaxed; every correctness rule stays on.
+    public_member_api_docs: false
+    cascade_invocations: false
+    lines_longer_than_80_chars: false
+    one_member_abstracts: false
+    # Riverpod family providers have unnameable generated types.
+    specify_nonobvious_property_types: false

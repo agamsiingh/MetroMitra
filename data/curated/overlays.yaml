@@ -1,0 +1,237 @@
+# MetroMitra curated overlays (applied after normalisation, before the conflict
+# check). M3: interchange merges and name resolutions, each verified against a cited reference. Nothing else is invented. Every entry MUST carry
+# `reason`, `source` and `verified_on`. Curated values win over source values
+# and every override is listed in build-report.json (never silent).
+#
+# Supported sections (see tools/data_pipeline/lib/src/overlay.dart):
+#   release:         {patch: 0}                     # dataset_version YYYY.MM.<patch>
+#   operators:       [{osm_operator, id, name_hi?, reason, source, verified_on}]
+#   lines:           [{id, name_en?, name_hi?, short_name?, color?, reason, source, verified_on}]
+#   stations:        [{id, name_en?, name_hi?, lat?, lng?, aliases?: [{text, lang, kind}], reason, source, verified_on}]
+#   station_merges:  [{id, members: [<cluster ids from the report>], reason, source, verified_on}]
+#   resolutions:     [{conflict: <conflict id>, accept: true | use: osm|wikidata|<value>, reason, source, verified_on}]
+#
+# RESERVED for later milestones (rejected if present): gates, platforms,
+# facilities, accessibility, parking, fares, timings.
+
+release: { patch: 0 }
+operators:
+  - osm_operator: "Delhi Metro Rail Corporation Limited"
+    id: dmrc
+    reason: "Stable short id for the operator named in OSM route relations."
+    source: mitra-curated
+    verified_on: "2026-10-05"
+stations:
+  - id: rohini-west
+    aliases:
+      - {text: "Rohini West", lang: en, kind: old}
+    reason: "Former name of the station, kept so riders can still find it."
+    source: "mitra-curated; renaming confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+station_merges:
+  - id: anand-vihar
+    members: [anand-vihar-blue-line@blue-line, anand-vihar-pink-line@pink-line]
+    reason: "Same station name on blue-line, pink-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: azadpur
+    members: [azadpur-pink-line@pink-line, azadpur-yellow-line@yellow-line]
+    reason: "Same station name on pink-line, yellow-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: botanical-garden
+    members: [botanical-garden@blue-line, botanical-garden@magenta-line]
+    reason: "Same station name on blue-line, magenta-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: central-secretariat
+    members: [central-secretariat@violet-line, central-secretariat@yellow-line]
+    reason: "Same station name on violet-line, yellow-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: dilli-haat-ina
+    members: [dilli-haat-ina@pink-line, dilli-haat-ina@yellow-line]
+    reason: "Same station name on pink-line, yellow-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: dwarka-kakrola
+    members: [dwarka-kakrola-blue-line@blue-line, dwarka-kakrola-grey-line@grey-line]
+    reason: "Same station name on blue-line, grey-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: dwarka-sector-21
+    members: [dwarka-sector-21@airport-express-line, dwarka-sector-21@blue-line]
+    reason: "Same station name on airport-express-line, blue-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: haiderpur-badli-mor
+    members: [haiderpur-badli-mor@magenta-line, haiderpur-badli-mor@yellow-line]
+    reason: "Same station name on magenta-line, yellow-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: hauz-khas
+    members: [hauz-khas-magenta-line@magenta-line, hauz-khas-yellow-line@yellow-line]
+    reason: "Same station name on magenta-line, yellow-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: inderlok
+    members: [inderlok-red-line@red-line, inderlok@green-line]
+    reason: "Same station name on red-line, green-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: janakpuri-west
+    members: [janakpuri-west@blue-line, janakpuri-west@magenta-line]
+    reason: "Same station name on blue-line, magenta-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: kalkaji-mandir
+    members: [kalkaji-mandir@magenta-line, kalkaji-mandir@violet-line]
+    reason: "Same station name on magenta-line, violet-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: karkarduma
+    members: [karkarduma-blue-line@blue-line, karkarduma-pink-line@pink-line]
+    reason: "Same station name on blue-line, pink-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: kashmere-gate
+    members: [kashmere-gate@red-line, kashmere-gate@violet-line, kashmere-gate@yellow-line]
+    reason: "Same station name on red-line, violet-line, yellow-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: kirti-nagar
+    members: [kirti-nagar-blue-line@blue-line, kirti-nagar@green-line]
+    reason: "Same station name on blue-line, green-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: lajpat-nagar
+    members: [lajpat-nagar-pink-line@pink-line, lajpat-nagar-violet-line@violet-line]
+    reason: "Same station name on pink-line, violet-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: madhuban-chowk
+    members: [madhuban-chowk@magenta-line, madhuban-chowk@red-line]
+    reason: "Same station name on magenta-line, red-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: majlis-park
+    members: [majlis-park@magenta-line, majlis-park@pink-line]
+    reason: "Same station name on magenta-line, pink-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: mandi-house
+    members: [mandi-house@blue-line, mandi-house@violet-line]
+    reason: "Same station name on blue-line, violet-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: mayur-vihar-i
+    members: [mayur-vihar-i-blue-line@blue-line, mayur-vihar-i-pink-line@pink-line]
+    reason: "Same station name on blue-line, pink-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: netaji-subhash-place
+    members: [netaji-subhash-place-pink-line@pink-line, netaji-subhash-place@red-line]
+    reason: "Same station name on pink-line, red-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: punjabi-bagh-west
+    members: [punjabi-bagh-west@green-line, punjabi-bagh-west@pink-line]
+    reason: "Same station name on green-line, pink-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: rajiv-chowk
+    members: [rajiv-chowk@blue-line, rajiv-chowk@yellow-line]
+    reason: "Same station name on blue-line, yellow-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: rajouri-garden
+    members: [rajouri-garden-blue-line@blue-line, rajouri-garden-pink-line@pink-line]
+    reason: "Same station name on blue-line, pink-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: welcome
+    members: [welcome-pink-line@pink-line, welcome@red-line]
+    reason: "Same station name on pink-line, red-line; the OSM stops are within 300 m; reference list marks it as an interchange between these lines."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - id: new-delhi
+    members: [new-delhi@yellow-line, new-delhi-airport-express-terminal@airport-express-line]
+    reason: "The official DMRC network map (Aug 2026) draws New Delhi as one interchange between the Yellow Line and the Airport Express (Orange) Line; the OSM stops are about 110 m apart."
+    source: "mitra-curated; interchange confirmed against the DMRC map \"Metro Network in Delhi-NCR\", as on August 2026 (reference only, nothing copied)"
+    verified_on: "2026-10-12"
+resolutions:
+  - conflict: "name-en-inconsistent|station:new-delhi@yellow-line|name_en"
+    use: "New Delhi"
+    reason: "OSM names the Airport Express stop \"New Delhi Airport Express Terminal\"; the official map names the interchange \"New Delhi\"."
+    source: "mitra-curated; interchange confirmed against the DMRC map \"Metro Network in Delhi-NCR\", as on August 2026 (reference only, nothing copied)"
+    verified_on: "2026-10-12"
+  - conflict: "name-en-inconsistent|station:anand-vihar-blue-line@blue-line|name_en"
+    use: "Anand Vihar"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:azadpur-pink-line@pink-line|name_en"
+    use: "Azadpur"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:dwarka-kakrola-blue-line@blue-line|name_en"
+    use: "Dwarka - Kakrola"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:hauz-khas-magenta-line@magenta-line|name_en"
+    use: "Hauz Khas"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:inderlok-red-line@red-line|name_en"
+    use: "Inderlok"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:karkarduma-blue-line@blue-line|name_en"
+    use: "Karkarduma"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:kirti-nagar-blue-line@blue-line|name_en"
+    use: "Kirti Nagar"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:lajpat-nagar-pink-line@pink-line|name_en"
+    use: "Lajpat Nagar"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:mayur-vihar-i-blue-line@blue-line|name_en"
+    use: "Mayur Vihar - I"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:netaji-subhash-place-pink-line@pink-line|name_en"
+    use: "Netaji Subhash Place"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:rajouri-garden-blue-line@blue-line|name_en"
+    use: "Rajouri Garden"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-inconsistent|station:welcome-pink-line@pink-line|name_en"
+    use: "Welcome"
+    reason: "OSM appends a line suffix to disambiguate its per-line stops; the station name has no suffix."
+    source: "mitra-curated; interchange confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "name-en-mismatch|station:rohini-west|name_en"
+    use: wikidata
+    reason: "Not a wrong link: OSM carries the former name 'Rohini West', Wikidata the current official name. Wikidata coordinates also agree with OSM (no coordinate conflict). Reference list: station was formerly known as Rohini West, Red Line only, not an interchange."
+    source: "mitra-curated; renaming confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
+    verified_on: "2026-10-05"
+  - conflict: "service-revisits-station|service:pink-line-maujpur-babarpur-shiv-vihar"
+    accept: true
+    reason: "Real topology, not a data error: the Pink Line is a ring whose junction Maujpur-Babarpur also starts the Shiv Vihar branch. Routing treats the junction as a seam where riders change trains (ADR-036)."
+    source: "mitra-curated; en.wikipedia.org/wiki/Pink_Line_(Delhi_Metro): 43 stations on the circular main line, 3 on the branch, Maujpur-Babarpur the common interchange, branch has separate services (reference only, nothing copied)"
+    verified_on: "2026-10-05"

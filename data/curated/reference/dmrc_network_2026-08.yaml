@@ -1,0 +1,38 @@
+# Official reference figures used ONLY to verify the built dataset (never
+# copied into it). Source: DMRC "Metro Network in Delhi-NCR" map, "As on
+# August 2026" (file DMRC-NMRC-and-NCRTC-MAP-10.09.2026), tables "Operational
+# Network" and "DMRC Operational Network (Ph I-IV)". Read by a curator from the
+# PDF on 2026-10-12. Numbers and terminal names are facts quoted for
+# comparison; no map artwork is used.
+source:
+  title: "Metro Network in Delhi-NCR (DMRC, NMRC, NCRTC), as on August 2026"
+  publisher: "Delhi Metro Rail Corporation"
+  retrieved_on: "2026-10-12"
+  curator: "MetroMitra maintainer"
+dmrc_total_stations: 271
+dmrc_total_km: 374.466
+lines:
+  - { no: "1", name: "Red Line", terminals: "Rithala - Shaheed Sthal (New Bus Adda)", km: 34.549, stations: 29, line: red-line }
+  - { no: "2", name: "Yellow Line", terminals: "Samaypur Badli - Millennium City Centre Gurugram", km: 49.019, stations: 37, line: yellow-line }
+  - { no: "3", name: "Blue Line", terminals: "Dwarka Sec 21 - Noida Electronic City", km: 56.114, stations: 50, line: blue-line, service: blue-line-dwarka-sector-21-noida-electronic-city }
+  - { no: "4", name: "Blue Line", terminals: "Yamuna Bank - Vaishali", km: 8.511, stations: 8, line: blue-line, service: blue-line-vaishali-yamuna-bank }
+  - { no: "5", name: "Green Line", terminals: "Kirti Nagar / Inderlok - Brig. Hoshiar Singh", km: 28.781, stations: 24, line: green-line }
+  - { no: "6", name: "Violet Line", terminals: "Kashmere Gate - Raja Nahar Singh (Ballabhgarh)", km: 46.341, stations: 34, line: violet-line }
+  - { no: "7", name: "Pink Line", terminals: "Majlis Park - Shiv Vihar & Majlis Park - Maujpur-Babarpur", km: 71.548, stations: 45, line: pink-line }
+  - { no: "8", name: "Magenta Line", terminals: "Botanical Garden - Krishna Park Extn. & Deepali Chowk - Majlis Park", km: 49.195, stations: 33, line: magenta-line }
+  - { no: "9", name: "Grey Line", terminals: "Dwarka - Dhansa Bus Stand", km: 5.491, stations: 4, line: grey-line }
+  - { no: "AE", name: "Orange Line (Airport Express)", terminals: "New Delhi - Yashobhoomi Dwarka Sec-25", km: 24.917, stations: 7, line: airport-express-line }
+# Differences that are understood and documented (docs/metro-data-sources.md
+# "Reference check"). Anything else fails `pipeline reference`.
+accepted:
+  - line: "7"
+    reason: >-
+      The official table lists 45 operational Pink Line stations and one station
+      of "Majlis Park - Maujpur-Babarpur" as still under construction; the map
+      does not show which one. The dataset (from OSM) has all 8 stations of that
+      section, so it counts 46. Not changed until a source names the station.
+not_in_dataset:
+  - "Aqua Line (NMRC, Noida - Greater Noida): 21 stations"
+  - "Rapid Metro (Gurugram): 11 stations"
+  - "Namo Bharat (NCRTC): 15 stations"
+  - "Meerut Metro: 12 stations"

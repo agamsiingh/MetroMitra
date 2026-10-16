@@ -1,0 +1,16 @@
+SELECT ?item ?itemLabel_en ?itemLabel_hi ?coord ?line ?lineLabel_en ?lineLabel_hi WHERE {
+  SERVICE wikibase:box {
+    ?item wdt:P625 ?coord .
+    bd:serviceParam wikibase:cornerSouthWest "Point(76.7 28.2)"^^geo:wktLiteral .
+    bd:serviceParam wikibase:cornerNorthEast "Point(77.7 28.95)"^^geo:wktLiteral .
+  }
+  ?item wdt:P31/wdt:P279* wd:Q928830 .
+  OPTIONAL { ?item rdfs:label ?itemLabel_en FILTER(LANG(?itemLabel_en) = "en") }
+  OPTIONAL { ?item rdfs:label ?itemLabel_hi FILTER(LANG(?itemLabel_hi) = "hi") }
+  OPTIONAL {
+    ?item wdt:P81 ?line .
+    OPTIONAL { ?line rdfs:label ?lineLabel_en FILTER(LANG(?lineLabel_en) = "en") }
+    OPTIONAL { ?line rdfs:label ?lineLabel_hi FILTER(LANG(?lineLabel_hi) = "hi") }
+  }
+}
+ORDER BY ?item ?line

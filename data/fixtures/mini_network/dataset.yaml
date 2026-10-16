@@ -1,0 +1,277 @@
+# ============================================================================
+# TEST DATA - SYNTHETIC. NOT REAL METRO INFORMATION.
+# Invented stations, lines, fares, gates and times used only by automated tests.
+# Nothing here describes any real network. It must never be shipped to users
+# (meta.is_test_data = true; the pipeline refuses to publish such a dataset).
+# Authoring format: see packages/metro_core/lib/src/authoring/yaml_dataset.dart
+# ============================================================================
+
+meta:
+  dataset_version: "2026.10.0"
+  built_at: "2026-10-05T00:00:00Z"
+  city: "testville"
+  attribution: "TEST DATA - synthetic fixture, no real-world source."
+  bbox: "27.3,76.0,29.3,78.7"
+  is_test_data: "true"
+
+sources:
+  - id: test-fixture
+    name: "TEST DATA - synthetic, invented for unit tests"
+    license: "CC0-1.0 (synthetic)"
+    notes: "Not derived from any real metro, map or website."
+
+operators:
+  - { id: test-op-a, name_en: "TEST Operator A", name_hi: "टेस्ट ऑपरेटर ए" }
+  - { id: test-op-b, name_en: "TEST Operator B", name_hi: "टेस्ट ऑपरेटर बी" }
+
+fare_systems:
+  - id: test-fare-a
+    operator: test-op-a
+    currency: INR
+    effective_from: "2026-01-01"
+    source: test-fixture
+    slabs:
+      - { day_type: regular, min_km: 0, max_km: 2, amount_paise: 1000 }
+      - { day_type: regular, min_km: 2, max_km: 5, amount_paise: 2000 }
+      - { day_type: regular, min_km: 5, max_km: 12, amount_paise: 3000 }
+      - { day_type: regular, min_km: 12, amount_paise: 4000 }
+      - { day_type: sunday_holiday, min_km: 0, max_km: 2, amount_paise: 1000 }
+      - { day_type: sunday_holiday, min_km: 2, amount_paise: 1500 }
+    discounts:
+      - { media: smart_card, kind: base, percent: 10 }
+      - media: smart_card
+        kind: off_peak
+        percent: 10
+        windows_json: '[{"days":"all","from":360,"to":480}]'
+    overrides:
+      - from: test-alpha
+        to: test-zeta
+        day_type: regular
+        amount_paise: 5000
+        source: test-fixture
+        verified_on: "2026-10-01"
+  - id: test-fare-b
+    operator: test-op-b
+    currency: INR
+    effective_from: "2026-01-01"
+    source: test-fixture
+    slabs:
+      - { day_type: regular, min_km: 0, amount_paise: 1500 }
+
+lines:
+  - id: test-red
+    operator: test-op-a
+    name_en: "TEST Red"
+    name_hi: "टेस्ट लाल"
+    short_name: "TR"
+    color: "#C62828"
+    text_color: "#FFFFFF"
+    sort: 1
+    status: open
+    services:
+      - id: test-red-main
+        name: "TEST Red (all stations)"
+        edge_provenance: { source: test-fixture, confidence: derived }
+        stops:
+          - { station: test-alpha, code: R1, dist_m: 0, next_travel_s: 110 }
+          - { station: test-beta, code: R2, dist_m: 1200, next_travel_s: 120 }
+          - { station: test-gamma, code: R3, dist_m: 2500, next_travel_s: 130 }
+          - { station: test-delta, code: R4, dist_m: 3900, next_travel_s: 120 }
+          - { station: test-epsilon, code: R5, dist_m: 5200, next_travel_s: 140 }
+          - { station: test-zeta, code: R6, dist_m: 6800 }
+  - id: test-blue
+    operator: test-op-a
+    name_en: "TEST Blue"
+    name_hi: "टेस्ट नीली"
+    short_name: "TB"
+    color: "#1565C0"
+    text_color: "#FFFFFF"
+    sort: 2
+    status: open
+    services:
+      - id: test-blue-main
+        name: "TEST Blue (all stations)"
+        edge_provenance: { source: test-fixture, confidence: derived }
+        stops:
+          - { station: test-eta, code: B1, dist_m: 0, next_travel_s: 100 }
+          - { station: test-gamma, code: B2, dist_m: 1500, next_travel_s: 125 }
+          - { station: test-theta, code: B3, dist_m: 3000, next_travel_s: 115 }
+          - { station: test-iota, code: B4, dist_m: 4600 }
+  - id: test-green
+    operator: test-op-b
+    name_en: "TEST Green"
+    name_hi: "टेस्ट हरी"
+    color: "#2E7D32"
+    text_color: "#FFFFFF"
+    sort: 3
+    status: open
+    services:
+      - id: test-green-main
+        name: "TEST Green (all stations)"
+        edge_provenance: { source: test-fixture, confidence: derived }
+        stops:
+          - { station: test-kappa, dist_m: 0, next_travel_s: 150 }
+          - { station: test-lambda, dist_m: 1800, next_travel_s: 140 }
+          - { station: test-mu, dist_m: 3300 }
+
+stations:
+  - id: test-alpha
+    names: { en: "TEST Alpha", hi: "टेस्ट अल्फा" }
+    lat: 28.600
+    lng: 77.100
+    popularity: 50
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+    aliases:
+      - { text: "Test Alfa", lang: en, kind: misspelling }
+      - { text: "अल्फा टेस्ट", lang: hi, kind: alias }
+    gates:
+      - number: 1
+        name_en: "TEST Gate 1"
+        lat: 28.6001
+        lng: 77.1002
+        is_open: true
+        has_lift: true
+        is_step_free: true
+        landmarks:
+          - { text_en: "TEST Road side", text_hi: "टेस्ट सड़क की ओर", kind: road }
+      - number: 2
+        # has_lift / has_ramp deliberately omitted = unknown (never guessed)
+        landmarks:
+          - { text_en: "TEST Bus stop", kind: bus }
+    facilities:
+      - { type: toilet, gate: 1, location_en: "TEST: near gate 1" }
+      - { type: atm }
+    accessibility:
+      lifts: 2
+      escalators: 4
+      tactile_path: true
+      # wheelchair_available omitted = unknown
+  - id: test-beta
+    names: { en: "TEST Beta", hi: "टेस्ट बीटा" }
+    lat: 28.600
+    lng: 77.112
+    popularity: 20
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+    aliases:
+      - { text: "बीटा टेस्ट", lang: hi, kind: alias }
+    gates:
+      - number: 1
+    facilities:
+      - { type: drinking_water }
+  - id: test-gamma
+    names: { en: "TEST Gamma (Interchange)", hi: "टेस्ट गामा (इंटरचेंज)" }
+    lat: 28.600
+    lng: 77.125
+    popularity: 90
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+    aliases:
+      - { text: "Test Gama", lang: en, kind: misspelling }
+      - { text: "गामा टेस्ट", lang: hi, kind: alias }
+      - { text: "TEST Central Mall", lang: en, kind: landmark }
+    # No gates recorded: tests "missing gate data" handling.
+    platforms:
+      - { line: test-red, number: "1", towards: test-alpha, service: test-red-main }
+      - { line: test-red, number: "2", towards: test-zeta, service: test-red-main }
+      - { line: test-blue, number: "1", towards: test-iota, service: test-blue-main }
+    accessibility:
+      lifts: 1
+  - id: test-delta
+    names: { en: "TEST Delta", hi: "टेस्ट डेल्टा" }
+    lat: 28.600
+    lng: 77.139
+    popularity: 10
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+  - id: test-epsilon
+    names: { en: "TEST Epsilon", hi: "टेस्ट एप्सिलॉन" }
+    lat: 28.600
+    lng: 77.152
+    popularity: 15
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+  - id: test-zeta
+    names: { en: "TEST Zeta", hi: "टेस्ट ज़ेटा" }
+    lat: 28.600
+    lng: 77.168
+    popularity: 30
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+  - id: test-eta
+    names: { en: "TEST Eta", hi: "टेस्ट ईटा" }
+    lat: 28.585
+    lng: 77.125
+    popularity: 12
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+  - id: test-theta
+    names: { en: "TEST Theta", hi: "टेस्ट थीटा" }
+    lat: 28.615
+    lng: 77.125
+    popularity: 18
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+  - id: test-iota
+    names: { en: "TEST Iota", hi: "टेस्ट आयोटा" }
+    lat: 28.630
+    lng: 77.125
+    popularity: 8
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+  - id: test-kappa
+    names: { en: "TEST Kappa", hi: "टेस्ट कप्पा" }
+    lat: 28.604
+    lng: 77.154
+    popularity: 14
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+  - id: test-lambda
+    names: { en: "TEST Lambda", hi: "टेस्ट लैम्ब्डा" }
+    lat: 28.620
+    lng: 77.160
+    popularity: 9
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+  - id: test-mu
+    names: { en: "TEST Mu", hi: "टेस्ट म्यू" }
+    lat: 28.635
+    lng: 77.165
+    popularity: 6
+    status: open
+    provenance: { source: test-fixture, confidence: community }
+
+transfers:
+  - station: test-gamma
+    from_line: test-red
+    to_line: test-blue
+    walk_m: 60
+    walk_s: 90
+    step_free: true
+    notes_en: "TEST: same-platform-level change"
+    provenance: { source: test-fixture, confidence: community }
+  - station: test-gamma
+    from_line: test-blue
+    to_line: test-red
+    walk_m: 60
+    walk_s: 90
+    step_free: true
+    provenance: { source: test-fixture, confidence: community }
+
+walk_links:
+  - id: test-walk-epsilon-kappa
+    from: test-epsilon
+    to: test-kappa
+    walk_m: 350
+    walk_s: 300
+    requires_exit: true
+    notes_en: "TEST: out-of-system walk between operators (separate ticket)"
+    provenance: { source: test-fixture, confidence: community }
+
+timings:
+  - { service: test-red-main, station: test-alpha, terminal: test-zeta, day_type: regular, first_dep: 360, last_dep: 1380, provenance: { source: test-fixture, confidence: community } }
+  - { service: test-red-main, station: test-alpha, terminal: test-zeta, day_type: sunday_holiday, first_dep: 390, last_dep: 1380, provenance: { source: test-fixture, confidence: community } }
+  - { service: test-red-main, station: test-zeta, terminal: test-alpha, day_type: regular, first_dep: 350, last_dep: 1410, provenance: { source: test-fixture, confidence: community } }
+  # Post-midnight last train (> 24:00) = 1470 minutes.
+  - { service: test-blue-main, station: test-eta, terminal: test-iota, day_type: regular, first_dep: 370, last_dep: 1470, provenance: { source: test-fixture, confidence: community } }

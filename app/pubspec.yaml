@@ -1,0 +1,46 @@
+name: metromitra
+description: "MetroMitra - Delhi Metro without confusion. Offline-first metro navigation."
+publish_to: none
+version: 0.1.0+1
+resolution: workspace
+
+environment:
+  sdk: ^3.12.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^3.0.0
+  geolocator: ^14.1.1
+  go_router: ^17.0.0
+  intl: any
+  metro_core: any
+  path_provider: ^2.1.6
+  pdfrx: ^2.4.8
+  sqlite3: ^3.5.2
+  wakelock_plus: ^1.8.0
+
+dev_dependencies:
+  cryptography: ^2.9.0
+  fake_async: ^1.3.3
+  flutter_test:
+    sdk: flutter
+  geolocator_platform_interface: ^4.4.0
+  plugin_platform_interface: ^2.1.8
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/brand/
+    - assets/brand/dmrc_map.pdf
+    - assets/data/
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Variable.ttf
+    - family: NotoSansDevanagari
+      fonts:
+        - asset: assets/fonts/NotoSansDevanagari-Variable.ttf

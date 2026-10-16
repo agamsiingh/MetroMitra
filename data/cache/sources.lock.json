@@ -1,0 +1,26 @@
+{
+  "lock_version": 1,
+  "sources": {
+    "osm-overpass": {
+      "bytes": 336769,
+      "endpoint": "https://overpass-api.de/api/interpreter",
+      "file": "osm-overpass.5d22fc7a00d5.json",
+      "license": "ODbL-1.0",
+      "records": 559,
+      "request_sha256": "481ab9a1df110a7cb9a626997f20baff148756b081c938b994fc71ba5fd34482",
+      "retrieved_at": "2026-10-05T13:35:45Z",
+      "sha256": "5d22fc7a00d5b2330a68fd7850acfe1a679bb4621ba91c0cb4bfe6a186f6fd2c",
+      "source_version": "2026-10-05T13:34:05Z"
+    },
+    "wikidata": {
+      "bytes": 300827,
+      "endpoint": "https://query.wikidata.org/sparql",
+      "file": "wikidata.763936d83a96.json",
+      "license": "CC0-1.0",
+      "records": 309,
+      "request_sha256": "b03127247d4074d05cd8b16dbd829e97619b706ea7607abfd699972356b5dc22",
+      "retrieved_at": "2026-10-05T13:35:51Z",
+      "sha256": "763936d83a96d79f1b1d3bfefa880d3a63df05add2353ddef2ea07829a6edb4e"
+    }
+  }
+}

@@ -1,0 +1,1247 @@
+{
+  "@@locale": "en",
+  "appName": "MetroMitra",
+  "tagline": "Delhi Metro without confusion",
+  "navGo": "Go",
+  "navMap": "Map",
+  "navAsk": "Ask",
+  "placeholderGoTitle": "Where to?",
+  "placeholderMapTitle": "Metro map",
+  "placeholderAskTitle": "Ask MetroMitra",
+  "placeholderBody": "This screen is not built yet.",
+  "stateEmptyTitle": "Nothing here yet",
+  "stateErrorTitle": "Something went wrong",
+  "stateOfflineTitle": "You're offline",
+  "stateOfflineBody": "This works without internet. Only updates need a connection.",
+  "stateDeniedTitle": "Permission needed",
+  "stateRetry": "Try again",
+  "bootLoading": "Loading metro data…",
+  "bootMissingTitle": "No metro data installed",
+  "bootMissingBody": "This build has no station data yet. MetroMitra works offline once a dataset is installed.",
+  "bootCorruptTitle": "Metro data can't be read",
+  "bootCorruptBody": "The data file is damaged. Reinstalling the app or updating the data will fix this.",
+  "bootIncompatibleTitle": "Metro data needs another app version",
+  "bootIncompatibleBody": "Update MetroMitra, or reinstall it, to use this data.",
+  "bootInvalidTitle": "Metro data failed its checks",
+  "bootInvalidBody": "The data has errors, so it is not used. Showing nothing is better than showing wrong information.",
+  "bootDraftTitle": "Draft data not allowed",
+  "bootDraftBody": "This data is an unverified draft and cannot be used in this build.",
+  "bootTestDataTitle": "Test data not allowed",
+  "bootTestDataBody": "This data is synthetic test data, not real metro information.",
+  "bannerDraft": "Draft data — not verified. Details may be wrong.",
+  "bannerTestData": "TEST DATA — not real metro information.",
+  "homeHeading": "Where do you want to go?",
+  "homeFromLabel": "From",
+  "homeToLabel": "To",
+  "homePickFrom": "Choose starting station",
+  "homePickTo": "Choose destination",
+  "homeSwap": "Swap From and To",
+  "homeFindRoute": "Find route",
+  "homeSameStation": "Choose two different stations.",
+  "homeStationMissing": "This station is not in the current data.",
+  "pickerHint": "Station name, Hindi name or code",
+  "pickerBlankTitle": "Search for a station",
+  "pickerBlankBody": "Type an English or Hindi name, or a station code.",
+  "pickerNoResultsTitle": "No station called “{query}”",
+  "pickerNoResultsBody": "Check the spelling, or try the Hindi name or the station code.",
+  "pickerDidYouMean": "Did you mean",
+  "pickerSimilar": "Similar names",
+  "pickerMatched": "Also known as: {text}",
+  "pickerInterchange": "Interchange",
+  "pickerClear": "Clear search",
+  "routeTitle": "Route",
+  "routeApproxMinutes": "About {minutes} min",
+  "routeApproxTitle": "Approximate times",
+  "routeApproxBody": "This data has no timetable or train frequency, so durations are estimates.",
+  "routeChanges": "{count, plural, =0{No changes} =1{1 change} other{{count} changes}}",
+  "routeStops": "{count, plural, =1{1 stop} other{{count} stops}}",
+  "routeWalking": "{meters} m walking",
+  "profileFastest": "Fastest",
+  "profileEasiest": "Fewest changes",
+  "profileLessWalking": "Least walking",
+  "profileFewestStops": "Fewest stops",
+  "routeOption": "Option {number}",
+  "rideTowards": "{line} towards {terminal}",
+  "rideFromTo": "{from} to {to}",
+  "rideMinutes": "About {minutes} min on the train",
+  "rideShowStops": "Show stops",
+  "rideHideStops": "Hide stops",
+  "rideWait": "Wait for the train: about {minutes} min (assumed)",
+  "changeTitle": "Change at {station}",
+  "changeLines": "{from} to {to}",
+  "changeWalkKnown": "Walk about {minutes} min ({meters} m)",
+  "changeWalkEstimated": "Allow about {minutes} min to change (estimated)",
+  "changeStepFree": "Step-free",
+  "changeRepeatedStop": "The line splits here. Get off and board the next train.",
+  "changeSameLine": "Change to the other branch of the same line.",
+  "changeThrough": "Stay on the train. It continues as {line}.",
+  "walkTitle": "Walk to {station}",
+  "walkDetail": "{meters} m, about {minutes} min",
+  "walkLeavesArea": "You leave the station area. You will need a new ticket.",
+  "fareTitle": "Fare",
+  "fareToken": "Token",
+  "fareCard": "Smart card",
+  "fareAmount": "{currency}{amount}",
+  "fareUnavailableTitle": "Fare not available",
+  "fareUnavailableBody": "The data has no fare for this trip, so none is shown.",
+  "farePartial": "The fare is known for only part of this trip, so no total is shown.",
+  "fareSeparate": "{count} separate tickets",
+  "fareDerived": "Estimated from distance",
+  "fareVerified": "Verified fare",
+  "fareDayNote": "Fare for today. Public holidays are not considered.",
+  "warnTitle": "Things to know",
+  "warnUnverifiedTransfer": "Walking time at {station} is estimated, not measured.",
+  "warnRepeatedStop": "You must change trains at {station}.",
+  "warnSeparateTicket": "This trip needs more than one ticket.",
+  "assumptionsTitle": "How these times are estimated",
+  "assumeRide": "Ride times between stations are estimated from distance.",
+  "assumeWait": "Each boarding adds an assumed wait of {minutes} min.",
+  "assumeTransferTime": "Interchange walking times are estimated.",
+  "assumeTransferDistance": "Interchange walking distances are estimated.",
+  "routeSameTitle": "Same station",
+  "routeSameBody": "Your starting point and destination are the same station.",
+  "routeNoRouteTitle": "No route found",
+  "routeNoRouteBody": "The data we have shows no way to travel from {from} to {to}. This may be a gap in the data.",
+  "routeNotServedTitle": "Station not served",
+  "routeNotServedBody": "{station} is not served by any open line in the data.",
+  "routeUnknownTitle": "Station not found",
+  "routeUnknownBody": "This station is not in the current data.",
+  "@pickerNoResultsTitle": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "@pickerMatched": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "@routeApproxMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "@routeChanges": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@routeStops": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@routeWalking": {
+    "placeholders": {
+      "meters": {
+        "type": "int"
+      }
+    }
+  },
+  "@routeOption": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "@rideTowards": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "terminal": {
+        "type": "String"
+      }
+    }
+  },
+  "@rideFromTo": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "@rideMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "@rideWait": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "@changeTitle": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "@changeLines": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "@changeWalkKnown": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "meters": {
+        "type": "int"
+      }
+    }
+  },
+  "@changeWalkEstimated": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "@changeThrough": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "@walkTitle": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "@walkDetail": {
+    "placeholders": {
+      "meters": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "@fareAmount": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@fareSeparate": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@warnUnverifiedTransfer": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "@warnRepeatedStop": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "@assumeWait": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "@routeNoRouteBody": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "@routeNotServedBody": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "stationTitle": "Station",
+  "stationInfoTooltip": "Station details",
+  "stationNotFoundTitle": "Station not found",
+  "stationNotFoundBody": "This link does not point to a station in the installed data.",
+  "stationStatusLabel": "Status",
+  "stationStatusOpen": "Open",
+  "stationStatusClosed": "Closed",
+  "stationStatusPlanned": "Not open yet",
+  "stationInterchange": "Interchange: you can change between lines here",
+  "stationSingleLine": "Served by one line",
+  "stationLinesTitle": "Lines",
+  "stationServicesTitle": "Services",
+  "stationAliasesTitle": "Also known as",
+  "stationAliasOld": "{text} (old name)",
+  "stationAliasMisspelling": "{text} (also spelled)",
+  "stationAliasLandmark": "{text} (nearby landmark)",
+  "stationAliasPlain": "{text}",
+  "stationLocationTitle": "Location",
+  "stationCoordinates": "{lat}, {lng}",
+  "stationNoCoordinates": "No usable coordinates in the data.",
+  "stationRouteFrom": "Route from here",
+  "stationRouteTo": "Route to here",
+  "stationMoreTitle": "Platforms, gates and facilities",
+  "stationPlatformsTitle": "Platforms",
+  "stationGatesTitle": "Gates",
+  "stationFacilitiesTitle": "Facilities",
+  "stationAccessibilityTitle": "Accessibility",
+  "stationNotInData": "Not in the data yet.",
+  "stationPlatform": "Platform {number} · {line}",
+  "stationGate": "Gate {number}",
+  "stationGateNamed": "Gate {number} · {name}",
+  "factYes": "Yes",
+  "factNo": "No",
+  "factLift": "Lift: {answer}",
+  "factRamp": "Ramp: {answer}",
+  "factEscalator": "Escalator: {answer}",
+  "factStepFree": "Step-free: {answer}",
+  "factGateOpen": "Open: {answer}",
+  "factLifts": "Lifts: {count}",
+  "factEscalators": "Escalators: {count}",
+  "factTactile": "Tactile path: {answer}",
+  "factWheelchair": "Wheelchair available: {answer}",
+  "facilityAtm": "ATM",
+  "facilityToilet": "Toilet",
+  "facilityDrinkingWater": "Drinking water",
+  "facilityHelpDesk": "Help desk",
+  "facilityCloakroom": "Cloakroom",
+  "facilityFirstAid": "First aid",
+  "facilityShop": "Shop",
+  "facilityOther": "Other facility",
+  "facilityAt": "{facility} · {where}",
+  "stationSource": "Source: {source} · {confidence}",
+  "stationSourceVerified": "Source: {source} · {confidence} · checked {date}",
+  "confOfficial": "official",
+  "confVerified": "verified",
+  "confDerived": "derived",
+  "confCommunity": "community-sourced",
+  "nearbyButton": "Nearby stations",
+  "nearbyTitle": "Nearby stations",
+  "nearbyRationaleTitle": "Find stations near you",
+  "nearbyRationaleBody": "MetroMitra uses your location once, on this phone only, to list the closest stations. It is not saved or sent anywhere.",
+  "nearbyUseLocation": "Use my location",
+  "nearbyLocating": "Finding your location…",
+  "nearbyDeniedTitle": "Location is not allowed",
+  "nearbyDeniedBody": "You can still pick a station by name.",
+  "nearbyDeniedPermanentBody": "Location permission was turned off for MetroMitra. Allow it in Settings, or pick a station by name.",
+  "nearbyOpenSettings": "Open settings",
+  "nearbyPickStation": "Pick a station",
+  "nearbyUnavailableTitle": "Can't get your location",
+  "nearbyUnavailableBody": "No position was found. Try again outside, or pick a station by name.",
+  "nearbyServicesOffTitle": "Location is switched off",
+  "nearbyServicesOffBody": "Switch on location in your phone settings, or pick a station by name.",
+  "nearbyOpenLocationSettings": "Open location settings",
+  "nearbyInvalidTitle": "Your location doesn't look right",
+  "nearbyInvalidBody": "Your phone gave a position that cannot be used. Try again, or pick a station by name.",
+  "nearbyNoneTitle": "No metro station nearby",
+  "nearbyNoneBody": "No open station within {km} km of you, in a straight line.",
+  "nearbyApproximate": "Your position is approximate, so distances may be off.",
+  "nearbyStraightLineNote": "Distances are in a straight line, not walking distance.",
+  "nearbyDistance": "{distance} in a straight line",
+  "distanceMeters": "{meters} m",
+  "distanceKm": "{km} km",
+  "nearbyRetry": "Try again",
+  "@stationAliasOld": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "@stationAliasMisspelling": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "@stationAliasLandmark": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "@stationAliasPlain": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "@stationCoordinates": {
+    "placeholders": {
+      "lat": {
+        "type": "String"
+      },
+      "lng": {
+        "type": "String"
+      }
+    }
+  },
+  "@stationPlatform": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "@stationGate": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "@stationGateNamed": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@factLift": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "@factRamp": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "@factEscalator": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "@factStepFree": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "@factGateOpen": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "@factLifts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@factEscalators": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@factTactile": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "@factWheelchair": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "@facilityAt": {
+    "placeholders": {
+      "facility": {
+        "type": "String"
+      },
+      "where": {
+        "type": "String"
+      }
+    }
+  },
+  "@stationSource": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "confidence": {
+        "type": "String"
+      }
+    }
+  },
+  "@stationSourceVerified": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "confidence": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@nearbyNoneBody": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "@nearbyDistance": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "@distanceMeters": {
+    "placeholders": {
+      "meters": {
+        "type": "int"
+      }
+    }
+  },
+  "@distanceKm": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "mapTitle": "Metro map",
+  "mapSemantics": "Metro map with {count} stations. To find a station by name, use search.",
+  "@mapSemantics": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapZoomIn": "Zoom in",
+  "mapZoomOut": "Zoom out",
+  "mapReset": "Fit to view",
+  "mapEmptyTitle": "Nothing to draw yet",
+  "mapEmptyBody": "The installed data has no stations.",
+  "mapEmptyNoCoordsBody": "The installed data has no stations with usable coordinates, so the map cannot be drawn.",
+  "mapSkippedNote": "{count, plural, =1{1 station is not shown: no usable coordinates in the data.} other{{count} stations are not shown: no usable coordinates in the data.}}",
+  "@mapSkippedNote": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapUnavailableTitle": "The map cannot be shown",
+  "mapUnavailableBody": "Something went wrong while drawing the map. Search and routes still work.",
+  "mapStationNotFoundTitle": "Station not found",
+  "mapStationNotFoundBody": "This link does not point to a station in the installed data.",
+  "mapStationNoCoordsTitle": "This station has no map position",
+  "mapStationNoCoordsBody": "The data has no usable coordinates for it.",
+  "mapShowWhole": "Show the whole network",
+  "mapShowOnMap": "Show on map",
+  "mapRouteTitle": "Route on map",
+  "mapRouteNotFoundTitle": "No route to show",
+  "mapRouteNotFoundBody": "This route cannot be found in the installed data.",
+  "mapRouteNoGeometryTitle": "This route cannot be drawn",
+  "mapRouteNoGeometryBody": "The data has no usable coordinates for the stations on this route. The route list still shows every step.",
+  "mapLegendTransfer": "Ringed station: you change trains here",
+  "mapLegendInterchange": "Dotted station: lines meet here",
+  "mapLegendWalk": "Dashed link: a walk between two stations. It is a straight link, not a walking path.",
+  "mapAttribution": "Map data: {text}",
+  "@mapAttribution": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyTitle": "Journey",
+  "journeyStart": "Start journey",
+  "journeyStepOf": "Step {current} of {total}",
+  "@journeyStepOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyEnter": "Go into {station}",
+  "@journeyEnter": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyBoard": "Board {line}",
+  "@journeyBoard": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyBoardTowards": "Board {line} towards {terminal}",
+  "@journeyBoardTowards": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "terminal": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyBoardAt": "At {station}",
+  "@journeyBoardAt": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyNoDirection": "The data names no end station for this direction. Check the signs on the platform.",
+  "journeyPlatform": "Platform {number}",
+  "@journeyPlatform": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyPlatformUnverified": "Platform {number} (unverified)",
+  "@journeyPlatformUnverified": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyPlatformUnknown": "Platform information unavailable.",
+  "journeyRide": "Get off at {station}",
+  "@journeyRide": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyStopsLeft": "{count, plural, =0{You should be there} =1{1 stop to go} other{{count} stops to go}}",
+  "@journeyStopsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "journeyNear": "Now around {station} (estimated)",
+  "@journeyNear": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyGetOffNext": "Get off at the next stop",
+  "journeyShouldBeThere": "You should be at {station} now. Get off here.",
+  "@journeyShouldBeThere": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyExit": "Leave {station}",
+  "@journeyExit": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyGates": "Gates in the data",
+  "journeyEntryUnknown": "Gate information unavailable.",
+  "journeyExitUnknown": "Exit information unavailable.",
+  "journeyNoBestExit": "The data does not say which exit is best for your destination.",
+  "journeyNext": "Next: {step}",
+  "@journeyNext": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyArrive": "Arrive at {station}",
+  "@journeyArrive": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyActionEnter": "I'm inside the station",
+  "journeyActionBoard": "I'm on the train",
+  "journeyActionRide": "I've got off",
+  "journeyActionChange": "I've changed",
+  "journeyActionStay": "OK",
+  "journeyActionWalk": "I've arrived",
+  "journeyActionDone": "Done",
+  "journeyCorrect": "I'm at…",
+  "journeyCorrectTitle": "Where are you now?",
+  "journeyUseLocation": "Use my location",
+  "journeyLocated": "Moved to {station}",
+  "@journeyLocated": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyNotNear": "No station of this route within 250 m of you.",
+  "journeyLocationDenied": "Location is not allowed. Tap “I'm at…” instead.",
+  "journeyLocationUnavailable": "Can't get your location here. Tap “I'm at…” instead.",
+  "journeyKeepAwake": "Keep screen on",
+  "journeyEstimateNote": "Stops are counted from approximate times. If it is wrong, tell us where you are.",
+  "journeyEndTitle": "End journey?",
+  "journeyEndBody": "Your progress on this route will be cleared.",
+  "journeyEndConfirm": "End journey",
+  "journeyEndCancel": "Keep going",
+  "journeyNoneTitle": "No journey in progress",
+  "journeyNoneBody": "Choose a route and tap Start journey.",
+  "journeyInProgress": "Journey in progress: {from} to {to}",
+  "@journeyInProgress": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "journeyContinue": "Continue",
+  "journeyEndShort": "End",
+  "journeyRestoreDataChanged": "Your last journey could not be continued because the metro data changed.",
+  "journeyRestoreExpired": "Your last journey was too old to continue.",
+  "journeyDismiss": "OK",
+  "journeyGateLift": "lift",
+  "journeyGateStepFree": "step-free",
+  "journeyCouldNotStart": "This route is no longer available.",
+  "askTitle": "Ask MetroMitra",
+  "askHint": "Ask about a route, fare, gate, platform…",
+  "askSend": "Ask",
+  "askIntro": "Ask in English or Hindi. Answers come only from the metro data on this phone, and say so when the data has no answer.",
+  "askSuggestRoute": "How do I reach…",
+  "askSuggestFare": "Fare from … to …",
+  "askSuggestLast": "Last metro from…",
+  "askSuggestNearest": "Nearest metro",
+  "askInsertRoute": "How do I reach ",
+  "askInsertFare": "Fare from ",
+  "askInsertLast": "Last metro from ",
+  "askYou": "You",
+  "askChosen": "Chosen: {station}",
+  "@askChosen": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "askSource": "Source: metro data {version}",
+  "@askSource": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "askSourceConfidence": "Source: metro data {version} · {confidence}",
+  "@askSourceConfidence": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "confidence": {
+        "type": "String"
+      }
+    }
+  },
+  "askSourceChecked": "checked {date}",
+  "@askSourceChecked": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "actOpenRoute": "Open route",
+  "actOpenStation": "Open station",
+  "actChooseStation": "Choose station",
+  "ansRouteSummary": "{from} to {to}: {duration} · {changes} · {stops}",
+  "@ansRouteSummary": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      },
+      "changes": {
+        "type": "String"
+      },
+      "stops": {
+        "type": "String"
+      }
+    }
+  },
+  "ansLines": "Lines: {lines}",
+  "@ansLines": {
+    "placeholders": {
+      "lines": {
+        "type": "String"
+      }
+    }
+  },
+  "ansChangeAt": "Change at {stations}",
+  "@ansChangeAt": {
+    "placeholders": {
+      "stations": {
+        "type": "String"
+      }
+    }
+  },
+  "ansMinutes": "{minutes} min",
+  "@ansMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "ansRouteSame": "You are already at {station}.",
+  "@ansRouteSame": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansRouteNone": "The data has no route between {from} and {to}.",
+  "@ansRouteNone": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "ansLineNoServices": "The data has no services for this line.",
+  "ansNearest": "See the stations closest to you.",
+  "ansGatesList": "Gates at {station} in the data:",
+  "@ansGatesList": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansGateForLandmark": "For “{landmark}” at {station}, the data lists:",
+  "@ansGateForLandmark": {
+    "placeholders": {
+      "landmark": {
+        "type": "String"
+      },
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansGateLandmarkUnknown": "The data does not link “{landmark}” to a gate at {station}. Gates in the data:",
+  "@ansGateLandmarkUnknown": {
+    "placeholders": {
+      "landmark": {
+        "type": "String"
+      },
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansGatesMissing": "I don't have verified gate information for {station} yet.",
+  "@ansGatesMissing": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansPlatformFound": "At {station}, {line} towards {terminal}: platform {number}.",
+  "@ansPlatformFound": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      },
+      "line": {
+        "type": "String"
+      },
+      "terminal": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "ansPlatformFoundNoDirection": "At {station}, {line} for {destination}: platform {number}.",
+  "@ansPlatformFoundNoDirection": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      },
+      "line": {
+        "type": "String"
+      },
+      "destination": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "ansUnverified": "This is not verified yet.",
+  "ansPlatformMissing": "I don't have verified platform information for {line} at {station} yet.",
+  "@ansPlatformMissing": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansFareFound": "Fare from {from} to {to}: {amount} (token).",
+  "@ansFareFound": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ansFareCard": "{amount} with a smart card.",
+  "@ansFareCard": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ansFareMissing": "I don't have fare data for {from} to {to} yet.",
+  "@ansFareMissing": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "ansFirstLastFound": "At {station}:",
+  "@ansFirstLastFound": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansFirstLastRow": "Towards {terminal}: first {first}, last {last}",
+  "@ansFirstLastRow": {
+    "placeholders": {
+      "terminal": {
+        "type": "String"
+      },
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "ansFirstRow": "Towards {terminal}: first {first}",
+  "@ansFirstRow": {
+    "placeholders": {
+      "terminal": {
+        "type": "String"
+      },
+      "first": {
+        "type": "String"
+      }
+    }
+  },
+  "ansLastRow": "Towards {terminal}: last {last}",
+  "@ansLastRow": {
+    "placeholders": {
+      "terminal": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "ansNextDay": "{time} (after midnight)",
+  "@ansNextDay": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "ansDayRegular": "Times for a regular day. Public holidays are not in the data.",
+  "ansDaySunday": "Times for Sundays.",
+  "ansFirstLastMissing": "I don't have verified first and last train times for {station} yet.",
+  "@ansFirstLastMissing": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansInterchangeNone": "No change of train needed from {from} to {to}.",
+  "@ansInterchangeNone": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "ansFacilitiesList": "Facilities at {station} in the data:",
+  "@ansFacilitiesList": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansFacilityMissing": "The data has no record of {facility} at {station}. That does not mean there is none.",
+  "@ansFacilityMissing": {
+    "placeholders": {
+      "facility": {
+        "type": "String"
+      },
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansFacilitiesMissing": "No facilities are recorded for {station} yet.",
+  "@ansFacilitiesMissing": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansAccessibilityFound": "Accessibility at {station} in the data:",
+  "@ansAccessibilityFound": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansLiftGates": "Lift at gate {gates}",
+  "@ansLiftGates": {
+    "placeholders": {
+      "gates": {
+        "type": "String"
+      }
+    }
+  },
+  "ansAccessibilityMissing": "I don't have verified accessibility information for {station} yet.",
+  "@ansAccessibilityMissing": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansParkingMissing": "I don't have parking information for {station} yet.",
+  "@ansParkingMissing": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "ansLineInfo": "{line}: {count} stations",
+  "@ansLineInfo": {
+    "placeholders": {
+      "line": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ansNotFound": "I couldn’t find a station called “{text}”. Check the spelling or choose it from the list.",
+  "@ansNotFound": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "ansClarifyStation": "Which station do you mean by “{text}”?",
+  "@ansClarifyStation": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "ansAskFrom": "From which station?",
+  "ansAskTo": "To which station?",
+  "ansAskStation": "Which station?",
+  "ansAskDestination": "Where are you going? Then I can tell you the direction.",
+  "ansUnknown": "I can answer questions about routes, fares, gates, platforms, first and last metro, facilities, lifts and nearby stations, from the metro data on this phone.",
+  "askAiLabel": "AI-generated · general guidance, not verified metro data",
+  "askAiPending": "Asking the AI…",
+  "askAiOffline": "Connect to internet for an AI answer.",
+  "askAiBusy": "The AI service is not available right now. Try again later.",
+  "askAiRefused": "Couldn't verify this answer.",
+  "askAiSent": "Your question was sent to MetroMitra's AI service. No location or other data was shared.",
+  "mapSearch": "Find a station on the map",
+  "mapSearchHint": "Station name, Hindi name or code",
+  "mapSearchNone": "No station found",
+  "mapTrackStart": "Show my location",
+  "mapTrackStop": "Stop showing my location",
+  "mapTrackLocating": "Finding your location…",
+  "mapTrackNearest": "Nearest station: {name}",
+  "@mapTrackNearest": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mapTrackDistance": "{distance} away in a straight line",
+  "@mapTrackDistance": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "mapTrackNone": "No open station within {km} km of you.",
+  "@mapTrackNone": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "mapTrackLost": "Location signal lost. Showing your last position.",
+  "mapTrackApprox": "Your position is approximate.",
+  "mapTrackPrivacy": "Your location stays on this phone and is not saved.",
+  "mapTrackDeniedBody": "The map works without your location.",
+  "routeDistance": "About {km} km by metro",
+  "routeDistanceEstimate": "Distance estimated from station positions; the track can be longer.",
+  "@routeDistance": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "overviewTitle": "Overview map",
+  "overviewOpen": "Overview map: every station",
+  "overviewNotToScale": "Map not to scale. Pinch to zoom."
+}

@@ -1,0 +1,194 @@
+# Offline assistant corpus (docs/ai.md): TEST DATA fixture (data/fixtures/mini_network).
+# Each case: question -> intent, slots (canonical ids), answer kind and template.
+# Generated once from patterns, then every outcome was reviewed by hand; edit freely.
+cases:
+  - {q: "how do i reach test zeta from test alpha", lang: en, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "route from test alpha to test zeta", lang: en, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "test alpha se test zeta kaise jaun", lang: hinglish, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "टेस्ट अल्फा से टेस्ट ज़ेटा कैसे जाऊं", lang: hi, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "how do i reach test iota from test beta", lang: en, intent: route, from: test-beta, to: test-iota, kind: answer, template: routeSummary}
+  - {q: "route from test beta to test iota", lang: en, intent: route, from: test-beta, to: test-iota, kind: answer, template: routeSummary}
+  - {q: "test beta se test iota kaise jaun", lang: hinglish, intent: route, from: test-beta, to: test-iota, kind: answer, template: routeSummary}
+  - {q: "टेस्ट बीटा से टेस्ट आयोटा कैसे जाऊं", lang: hi, intent: route, from: test-beta, to: test-iota, kind: answer, template: routeSummary}
+  - {q: "how do i reach test delta from test eta", lang: en, intent: route, from: test-eta, to: test-delta, kind: answer, template: routeSummary}
+  - {q: "route from test eta to test delta", lang: en, intent: route, from: test-eta, to: test-delta, kind: answer, template: routeSummary}
+  - {q: "test eta se test delta kaise jaun", lang: hinglish, intent: route, from: test-eta, to: test-delta, kind: answer, template: routeSummary}
+  - {q: "टेस्ट ईटा से टेस्ट डेल्टा कैसे जाऊं", lang: hi, intent: route, from: test-eta, to: test-delta, kind: answer, template: routeSummary}
+  - {q: "how do i reach test theta from test alpha", lang: en, intent: route, from: test-alpha, to: test-theta, kind: answer, template: routeSummary}
+  - {q: "route from test alpha to test theta", lang: en, intent: route, from: test-alpha, to: test-theta, kind: answer, template: routeSummary}
+  - {q: "test alpha se test theta kaise jaun", lang: hinglish, intent: route, from: test-alpha, to: test-theta, kind: answer, template: routeSummary}
+  - {q: "टेस्ट अल्फा से टेस्ट थीटा कैसे जाऊं", lang: hi, intent: route, from: test-alpha, to: test-theta, kind: answer, template: routeSummary}
+  - {q: "how do i reach test beta from test zeta", lang: en, intent: route, from: test-zeta, to: test-beta, kind: answer, template: routeSummary}
+  - {q: "route from test zeta to test beta", lang: en, intent: route, from: test-zeta, to: test-beta, kind: answer, template: routeSummary}
+  - {q: "test zeta se test beta kaise jaun", lang: hinglish, intent: route, from: test-zeta, to: test-beta, kind: answer, template: routeSummary}
+  - {q: "टेस्ट ज़ेटा से टेस्ट बीटा कैसे जाऊं", lang: hi, intent: route, from: test-zeta, to: test-beta, kind: answer, template: routeSummary}
+  - {q: "how do i reach test epsilon from test gamma", lang: en, intent: route, from: test-gamma, to: test-epsilon, kind: answer, template: routeSummary}
+  - {q: "route from test gamma to test epsilon", lang: en, intent: route, from: test-gamma, to: test-epsilon, kind: answer, template: routeSummary}
+  - {q: "test gamma se test epsilon kaise jaun", lang: hinglish, intent: route, from: test-gamma, to: test-epsilon, kind: answer, template: routeSummary}
+  - {q: "टेस्ट गामा से टेस्ट एप्सिलॉन कैसे जाऊं", lang: hi, intent: route, from: test-gamma, to: test-epsilon, kind: answer, template: routeSummary}
+  - {q: "test alpha to test zeta", lang: en, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "mujhe test alpha se test zeta jaana hai", lang: hinglish, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "टेस्ट अल्फा से टेस्ट ज़ेटा का रास्ता", lang: hi, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "test beta to test iota", lang: en, intent: route, from: test-beta, to: test-iota, kind: answer, template: routeSummary}
+  - {q: "mujhe test beta se test iota jaana hai", lang: hinglish, intent: route, from: test-beta, to: test-iota, kind: answer, template: routeSummary}
+  - {q: "टेस्ट बीटा से टेस्ट आयोटा का रास्ता", lang: hi, intent: route, from: test-beta, to: test-iota, kind: answer, template: routeSummary}
+  - {q: "test eta to test delta", lang: en, intent: route, from: test-eta, to: test-delta, kind: answer, template: routeSummary}
+  - {q: "mujhe test eta se test delta jaana hai", lang: hinglish, intent: route, from: test-eta, to: test-delta, kind: answer, template: routeSummary}
+  - {q: "टेस्ट ईटा से टेस्ट डेल्टा का रास्ता", lang: hi, intent: route, from: test-eta, to: test-delta, kind: answer, template: routeSummary}
+  - {q: "test alpha to test theta", lang: en, intent: route, from: test-alpha, to: test-theta, kind: answer, template: routeSummary}
+  - {q: "mujhe test alpha se test theta jaana hai", lang: hinglish, intent: route, from: test-alpha, to: test-theta, kind: answer, template: routeSummary}
+  - {q: "टेस्ट अल्फा से टेस्ट थीटा का रास्ता", lang: hi, intent: route, from: test-alpha, to: test-theta, kind: answer, template: routeSummary}
+  - {q: "take me to test zeta from test alpha", lang: en, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "How do I get to TEST Iota from TEST Beta?", lang: en, intent: route, from: test-beta, to: test-iota, kind: answer, template: routeSummary}
+  - {q: "fare from test alpha to test zeta", lang: en, intent: fare, from: test-alpha, to: test-zeta, kind: answer, template: fareFound}
+  - {q: "kiraya test alpha se test zeta", lang: hinglish, intent: fare, from: test-alpha, to: test-zeta, kind: answer, template: fareFound}
+  - {q: "टेस्ट अल्फा से टेस्ट ज़ेटा किराया", lang: hi, intent: fare, from: test-alpha, to: test-zeta, kind: answer, template: fareFound}
+  - {q: "fare from test beta to test delta", lang: en, intent: fare, from: test-beta, to: test-delta, kind: answer, template: fareFound}
+  - {q: "kiraya test beta se test delta", lang: hinglish, intent: fare, from: test-beta, to: test-delta, kind: answer, template: fareFound}
+  - {q: "टेस्ट बीटा से टेस्ट डेल्टा किराया", lang: hi, intent: fare, from: test-beta, to: test-delta, kind: answer, template: fareFound}
+  - {q: "fare from test beta to test iota", lang: en, intent: fare, from: test-beta, to: test-iota, kind: answer, template: fareFound}
+  - {q: "kiraya test beta se test iota", lang: hinglish, intent: fare, from: test-beta, to: test-iota, kind: answer, template: fareFound}
+  - {q: "टेस्ट बीटा से टेस्ट आयोटा किराया", lang: hi, intent: fare, from: test-beta, to: test-iota, kind: answer, template: fareFound}
+  - {q: "fare from test eta to test theta", lang: en, intent: fare, from: test-eta, to: test-theta, kind: answer, template: fareFound}
+  - {q: "kiraya test eta se test theta", lang: hinglish, intent: fare, from: test-eta, to: test-theta, kind: answer, template: fareFound}
+  - {q: "टेस्ट ईटा से टेस्ट थीटा किराया", lang: hi, intent: fare, from: test-eta, to: test-theta, kind: answer, template: fareFound}
+  - {q: "fare from test alpha to test gamma", lang: en, intent: fare, from: test-alpha, to: test-gamma, kind: answer, template: fareFound}
+  - {q: "kiraya test alpha se test gamma", lang: hinglish, intent: fare, from: test-alpha, to: test-gamma, kind: answer, template: fareFound}
+  - {q: "टेस्ट अल्फा से टेस्ट गामा किराया", lang: hi, intent: fare, from: test-alpha, to: test-gamma, kind: answer, template: fareFound}
+  - {q: "how much is the ticket from test alpha to test delta", lang: en, intent: fare, from: test-alpha, to: test-delta, kind: answer, template: fareFound}
+  - {q: "test beta se test zeta kitne paise lagenge", lang: hinglish, intent: fare, from: test-beta, to: test-zeta, kind: answer, template: fareFound}
+  - {q: "smart card fare test alpha to test delta", lang: en, intent: fare, from: test-alpha, to: test-delta, kind: answer, template: fareFound}
+  - {q: "test alpha to test delta fare", lang: en, intent: fare, from: test-alpha, to: test-delta, kind: answer, template: fareFound}
+  - {q: "where do i change from test alpha to test iota", lang: en, intent: interchange, from: test-alpha, to: test-iota, kind: answer, template: interchangeAt}
+  - {q: "test alpha se test iota metro kahan badalni hai", lang: hinglish, intent: interchange, from: test-alpha, to: test-iota, kind: answer, template: interchangeAt}
+  - {q: "टेस्ट अल्फा से टेस्ट आयोटा कहाँ बदलना है", lang: hi, intent: interchange, from: test-alpha, to: test-iota, kind: answer, template: interchangeAt}
+  - {q: "where do i change from test eta to test zeta", lang: en, intent: interchange, from: test-eta, to: test-zeta, kind: answer, template: interchangeAt}
+  - {q: "test eta se test zeta metro kahan badalni hai", lang: hinglish, intent: interchange, from: test-eta, to: test-zeta, kind: answer, template: interchangeAt}
+  - {q: "टेस्ट ईटा से टेस्ट ज़ेटा कहाँ बदलना है", lang: hi, intent: interchange, from: test-eta, to: test-zeta, kind: answer, template: interchangeAt}
+  - {q: "where do i change from test beta to test theta", lang: en, intent: interchange, from: test-beta, to: test-theta, kind: answer, template: interchangeAt}
+  - {q: "test beta se test theta metro kahan badalni hai", lang: hinglish, intent: interchange, from: test-beta, to: test-theta, kind: answer, template: interchangeAt}
+  - {q: "टेस्ट बीटा से टेस्ट थीटा कहाँ बदलना है", lang: hi, intent: interchange, from: test-beta, to: test-theta, kind: answer, template: interchangeAt}
+  - {q: "interchange for test zeta from test alpha", lang: en, intent: interchange, from: test-alpha, to: test-zeta, kind: answer, template: interchangeNone}
+  - {q: "last metro from test alpha", lang: en, intent: firstLast, station: test-alpha, kind: answer, template: firstLastFound}
+  - {q: "first train at test alpha", lang: en, intent: firstLast, station: test-alpha, kind: answer, template: firstLastFound}
+  - {q: "test alpha se aakhri metro kab hai", lang: hinglish, intent: firstLast, station: test-alpha, kind: answer, template: firstLastFound}
+  - {q: "टेस्ट अल्फा से आखिरी मेट्रो कब है", lang: hi, intent: firstLast, station: test-alpha, kind: answer, template: firstLastFound}
+  - {q: "last metro from test zeta", lang: en, intent: firstLast, station: test-zeta, kind: answer, template: firstLastFound}
+  - {q: "first train at test zeta", lang: en, intent: firstLast, station: test-zeta, kind: answer, template: firstLastFound}
+  - {q: "test zeta se aakhri metro kab hai", lang: hinglish, intent: firstLast, station: test-zeta, kind: answer, template: firstLastFound}
+  - {q: "टेस्ट ज़ेटा से आखिरी मेट्रो कब है", lang: hi, intent: firstLast, station: test-zeta, kind: answer, template: firstLastFound}
+  - {q: "last metro from test eta", lang: en, intent: firstLast, station: test-eta, kind: answer, template: firstLastFound}
+  - {q: "first train at test eta", lang: en, intent: firstLast, station: test-eta, kind: answer, template: firstLastFound}
+  - {q: "test eta se aakhri metro kab hai", lang: hinglish, intent: firstLast, station: test-eta, kind: answer, template: firstLastFound}
+  - {q: "टेस्ट ईटा से आखिरी मेट्रो कब है", lang: hi, intent: firstLast, station: test-eta, kind: answer, template: firstLastFound}
+  - {q: "last metro from test kappa", lang: en, intent: firstLast, station: test-kappa, kind: missing, template: firstLastMissing}
+  - {q: "first train at test kappa", lang: en, intent: firstLast, station: test-kappa, kind: missing, template: firstLastMissing}
+  - {q: "test kappa se aakhri metro kab hai", lang: hinglish, intent: firstLast, station: test-kappa, kind: missing, template: firstLastMissing}
+  - {q: "टेस्ट कप्पा से आखिरी मेट्रो कब है", lang: hi, intent: firstLast, station: test-kappa, kind: missing, template: firstLastMissing}
+  - {q: "last metro from test gamma", lang: en, intent: firstLast, station: test-gamma, kind: missing, template: firstLastMissing}
+  - {q: "first train at test gamma", lang: en, intent: firstLast, station: test-gamma, kind: missing, template: firstLastMissing}
+  - {q: "test gamma se aakhri metro kab hai", lang: hinglish, intent: firstLast, station: test-gamma, kind: missing, template: firstLastMissing}
+  - {q: "टेस्ट गामा से आखिरी मेट्रो कब है", lang: hi, intent: firstLast, station: test-gamma, kind: missing, template: firstLastMissing}
+  - {q: "last metro from test alpha to test zeta", lang: en, intent: firstLast, station: test-alpha, dest: test-zeta, kind: answer, template: firstLastFound}
+  - {q: "pehli metro test zeta se", lang: hinglish, intent: firstLast, station: test-zeta, kind: answer, template: firstLastFound}
+  - {q: "which gate at test alpha", lang: en, intent: gateExit, station: test-alpha, kind: answer, template: gatesList}
+  - {q: "test alpha par kaunsa gate", lang: hinglish, intent: gateExit, station: test-alpha, kind: answer, template: gatesList}
+  - {q: "टेस्ट अल्फा पर गेट", lang: hi, intent: gateExit, station: test-alpha, kind: answer, template: gatesList}
+  - {q: "which gate at test beta", lang: en, intent: gateExit, station: test-beta, kind: answer, template: gatesList}
+  - {q: "test beta par kaunsa gate", lang: hinglish, intent: gateExit, station: test-beta, kind: answer, template: gatesList}
+  - {q: "टेस्ट बीटा पर गेट", lang: hi, intent: gateExit, station: test-beta, kind: answer, template: gatesList}
+  - {q: "which gate at test gamma", lang: en, intent: gateExit, station: test-gamma, kind: missing, template: gatesMissing}
+  - {q: "test gamma par kaunsa gate", lang: hinglish, intent: gateExit, station: test-gamma, kind: missing, template: gatesMissing}
+  - {q: "टेस्ट गामा पर गेट", lang: hi, intent: gateExit, station: test-gamma, kind: missing, template: gatesMissing}
+  - {q: "which gate at test mu", lang: en, intent: gateExit, station: test-mu, kind: missing, template: gatesMissing}
+  - {q: "test mu par kaunsa gate", lang: hinglish, intent: gateExit, station: test-mu, kind: missing, template: gatesMissing}
+  - {q: "टेस्ट म्यू पर गेट", lang: hi, intent: gateExit, station: test-mu, kind: missing, template: gatesMissing}
+  - {q: "exit at test alpha for bus stop", lang: en, intent: gateExit, station: test-alpha, kind: answer, template: gateForLandmark}
+  - {q: "which exit for road at test alpha", lang: en, intent: gateExit, station: test-alpha, kind: answer, template: gateForLandmark}
+  - {q: "which gate for the cinema at test alpha", lang: en, intent: gateExit, station: test-alpha, kind: missing, template: gateLandmarkUnknown}
+  - {q: "which platform at test gamma for test iota", lang: en, intent: platform, station: test-gamma, dest: test-iota, kind: answer, template: platformFound}
+  - {q: "test gamma se test iota ke liye platform", lang: hinglish, intent: platform, station: test-gamma, dest: test-iota, kind: answer, template: platformFound}
+  - {q: "टेस्ट गामा से टेस्ट आयोटा के लिए प्लेटफॉर्म", lang: hi, intent: platform, station: test-gamma, dest: test-iota, kind: answer, template: platformFound}
+  - {q: "which platform at test gamma for test alpha", lang: en, intent: platform, station: test-gamma, dest: test-alpha, kind: answer, template: platformFound}
+  - {q: "test gamma se test alpha ke liye platform", lang: hinglish, intent: platform, station: test-gamma, dest: test-alpha, kind: answer, template: platformFound}
+  - {q: "टेस्ट गामा से टेस्ट अल्फा के लिए प्लेटफॉर्म", lang: hi, intent: platform, station: test-gamma, dest: test-alpha, kind: answer, template: platformFound}
+  - {q: "which platform at test gamma for test zeta", lang: en, intent: platform, station: test-gamma, dest: test-zeta, kind: answer, template: platformFound}
+  - {q: "test gamma se test zeta ke liye platform", lang: hinglish, intent: platform, station: test-gamma, dest: test-zeta, kind: answer, template: platformFound}
+  - {q: "टेस्ट गामा से टेस्ट ज़ेटा के लिए प्लेटफॉर्म", lang: hi, intent: platform, station: test-gamma, dest: test-zeta, kind: answer, template: platformFound}
+  - {q: "which platform at test alpha for test zeta", lang: en, intent: platform, station: test-alpha, dest: test-zeta, kind: missing, template: platformMissing}
+  - {q: "test alpha se test zeta ke liye platform", lang: hinglish, intent: platform, station: test-alpha, dest: test-zeta, kind: missing, template: platformMissing}
+  - {q: "टेस्ट अल्फा से टेस्ट ज़ेटा के लिए प्लेटफॉर्म", lang: hi, intent: platform, station: test-alpha, dest: test-zeta, kind: missing, template: platformMissing}
+  - {q: "is there a toilet at test alpha", lang: en, intent: facilities, station: test-alpha, facility: toilet, kind: answer, template: facilityFound}
+  - {q: "test alpha par toilet hai kya", lang: hinglish, intent: facilities, station: test-alpha, facility: toilet, kind: answer, template: facilityFound}
+  - {q: "टेस्ट अल्फा पर शौचालय है क्या", lang: hi, intent: facilities, station: test-alpha, facility: toilet, kind: answer, template: facilityFound}
+  - {q: "is there a atm at test alpha", lang: en, intent: facilities, station: test-alpha, facility: atm, kind: answer, template: facilityFound}
+  - {q: "test alpha par atm hai kya", lang: hinglish, intent: facilities, station: test-alpha, facility: atm, kind: answer, template: facilityFound}
+  - {q: "टेस्ट अल्फा पर एटीएम है क्या", lang: hi, intent: facilities, station: test-alpha, facility: atm, kind: answer, template: facilityFound}
+  - {q: "is there a atm at test beta", lang: en, intent: facilities, station: test-beta, facility: atm, kind: missing, template: facilityMissing}
+  - {q: "test beta par atm hai kya", lang: hinglish, intent: facilities, station: test-beta, facility: atm, kind: missing, template: facilityMissing}
+  - {q: "टेस्ट बीटा पर एटीएम है क्या", lang: hi, intent: facilities, station: test-beta, facility: atm, kind: missing, template: facilityMissing}
+  - {q: "is there a drinking water at test beta", lang: en, intent: facilities, station: test-beta, facility: drinkingWater, kind: answer, template: facilityFound}
+  - {q: "test beta par pani hai kya", lang: hinglish, intent: facilities, station: test-beta, facility: drinkingWater, kind: answer, template: facilityFound}
+  - {q: "टेस्ट बीटा पर पानी है क्या", lang: hi, intent: facilities, station: test-beta, facility: drinkingWater, kind: answer, template: facilityFound}
+  - {q: "is there a toilet at test gamma", lang: en, intent: facilities, station: test-gamma, facility: toilet, kind: missing, template: facilityMissing}
+  - {q: "test gamma par toilet hai kya", lang: hinglish, intent: facilities, station: test-gamma, facility: toilet, kind: missing, template: facilityMissing}
+  - {q: "टेस्ट गामा पर शौचालय है क्या", lang: hi, intent: facilities, station: test-gamma, facility: toilet, kind: missing, template: facilityMissing}
+  - {q: "facilities at test alpha", lang: en, intent: facilities, station: test-alpha, kind: answer, template: facilitiesList}
+  - {q: "facilities at test mu", lang: en, intent: facilities, station: test-mu, kind: missing, template: facilityMissing}
+  - {q: "is there a lift at test alpha", lang: en, intent: accessibility, station: test-alpha, kind: answer, template: accessibilityFound}
+  - {q: "test alpha par lift hai kya", lang: hinglish, intent: accessibility, station: test-alpha, kind: answer, template: accessibilityFound}
+  - {q: "टेस्ट अल्फा पर लिफ्ट", lang: hi, intent: accessibility, station: test-alpha, kind: answer, template: accessibilityFound}
+  - {q: "is there a lift at test gamma", lang: en, intent: accessibility, station: test-gamma, kind: answer, template: accessibilityFound}
+  - {q: "test gamma par lift hai kya", lang: hinglish, intent: accessibility, station: test-gamma, kind: answer, template: accessibilityFound}
+  - {q: "टेस्ट गामा पर लिफ्ट", lang: hi, intent: accessibility, station: test-gamma, kind: answer, template: accessibilityFound}
+  - {q: "is there a lift at test beta", lang: en, intent: accessibility, station: test-beta, kind: missing, template: accessibilityMissing}
+  - {q: "test beta par lift hai kya", lang: hinglish, intent: accessibility, station: test-beta, kind: missing, template: accessibilityMissing}
+  - {q: "टेस्ट बीटा पर लिफ्ट", lang: hi, intent: accessibility, station: test-beta, kind: missing, template: accessibilityMissing}
+  - {q: "wheelchair access at test alpha", lang: en, intent: accessibility, station: test-alpha, kind: answer, template: accessibilityFound}
+  - {q: "parking at test alpha", lang: en, intent: parking, station: test-alpha, kind: missing, template: parkingMissing}
+  - {q: "test alpha par parking hai", lang: hinglish, intent: parking, station: test-alpha, kind: missing, template: parkingMissing}
+  - {q: "टेस्ट अल्फा पर पार्किंग", lang: hi, intent: parking, station: test-alpha, kind: missing, template: parkingMissing}
+  - {q: "parking at test beta", lang: en, intent: parking, station: test-beta, kind: missing, template: parkingMissing}
+  - {q: "test beta par parking hai", lang: hinglish, intent: parking, station: test-beta, kind: missing, template: parkingMissing}
+  - {q: "टेस्ट बीटा पर पार्किंग", lang: hi, intent: parking, station: test-beta, kind: missing, template: parkingMissing}
+  - {q: "nearest metro", lang: en, intent: nearestStation, kind: answer, template: nearestOpen}
+  - {q: "metro station near me", lang: en, intent: nearestStation, kind: answer, template: nearestOpen}
+  - {q: "closest station", lang: en, intent: nearestStation, kind: answer, template: nearestOpen}
+  - {q: "paas mein metro kahan hai", lang: hinglish, intent: nearestStation, kind: answer, template: nearestOpen}
+  - {q: "sabse nazdeek metro", lang: hinglish, intent: nearestStation, kind: answer, template: nearestOpen}
+  - {q: "मेरे पास मेट्रो स्टेशन", lang: hi, intent: nearestStation, kind: answer, template: nearestOpen}
+  - {q: "नज़दीकी मेट्रो", lang: hi, intent: nearestStation, kind: answer, template: nearestOpen}
+  - {q: "test red line stations", lang: en, intent: lineInfo, line: test-red, kind: answer, template: lineInfo}
+  - {q: "stations on test blue", lang: en, intent: lineInfo, line: test-blue, kind: answer, template: lineInfo}
+  - {q: "test green line ke stations", lang: hinglish, intent: lineInfo, line: test-green, kind: answer, template: lineInfo}
+  - {q: "टेस्ट लाल लाइन स्टेशन", lang: hi, intent: lineInfo, line: test-red, kind: answer, template: lineInfo}
+  - {q: "what is the weather", lang: en, intent: unknown, kind: unknown, template: unknown}
+  - {q: "tell me a joke", lang: en, intent: unknown, kind: unknown, template: unknown}
+  - {q: "who won the match", lang: en, intent: unknown, kind: unknown, template: unknown}
+  - {q: "aaj mausam kaisa hai", lang: hinglish, intent: unknown, kind: unknown, template: unknown}
+  - {q: "मौसम कैसा है", lang: hi, intent: unknown, kind: unknown, template: unknown}
+  - {q: "", lang: en, intent: unknown, kind: unknown, template: unknown}
+  - {q: "???", lang: en, intent: unknown, kind: unknown, template: unknown}
+  - {q: "test", lang: en, intent: route, kind: clarify, template: clarifyStation}
+  - {q: "fare to test zeta", lang: en, intent: fare, to: test-zeta, kind: clarify, template: askFrom}
+  - {q: "test zeta ka kiraya", lang: hinglish, intent: fare, to: test-zeta, kind: clarify, template: askFrom}
+  - {q: "how do i reach test iota", lang: en, intent: route, to: test-iota, kind: clarify, template: askFrom}
+  - {q: "which platform at test gamma", lang: en, intent: platform, station: test-gamma, kind: clarify, template: askDestination}
+  - {q: "toilet", lang: en, intent: facilities, facility: toilet, kind: clarify, template: askStation}
+  - {q: "last metro", lang: en, intent: firstLast, kind: clarify, template: askStation}
+  - {q: "aakhri metro kab hai", lang: hinglish, intent: firstLast, kind: clarify, template: askStation}
+  - {q: "parking", lang: en, intent: parking, kind: clarify, template: askStation}
+  - {q: "which gate", lang: en, intent: gateExit, kind: clarify, template: askStation}
+  - {q: "आखिरी मेट्रो कब है", lang: hi, intent: firstLast, kind: clarify, template: askStation}
+  - {q: "how to reach narnia", lang: en, intent: route, kind: notFound, template: stationNotFound}
+  - {q: "fare from narnia to test zeta", lang: en, intent: fare, to: test-zeta, kind: notFound, template: stationNotFound}
+  - {q: "narnia se test beta kaise jaun", lang: hinglish, intent: route, to: test-beta, kind: notFound, template: stationNotFound}
+  - {q: "toilet at narnia", lang: en, intent: facilities, kind: notFound, template: stationNotFound}
+  - {q: "last metro from atlantis", lang: en, intent: firstLast, kind: notFound, template: stationNotFound}
+  - {q: "which gate at atlantis", lang: en, intent: gateExit, kind: notFound, template: stationNotFound}
+  - {q: "नार्निया से टेस्ट बीटा कैसे जाऊं", lang: hi, intent: route, to: test-beta, kind: notFound, template: stationNotFound}
+  - {q: "test alpha to test alpha", lang: en, intent: route, from: test-alpha, to: test-alpha, kind: answer, template: routeSameStation}
+  - {q: "test alpha se test zeta kitna time lagta hai", lang: hinglish, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "test alfa to test zeta", lang: en, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "R1 to R6", lang: en, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}
+  - {q: "अल्फा टेस्ट से टेस्ट ज़ेटा", lang: hi, intent: route, from: test-alpha, to: test-zeta, kind: answer, template: routeSummary}

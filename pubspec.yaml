@@ -1,0 +1,14 @@
+name: metromitra_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.12.1
+
+workspace:
+  - app
+  - packages/metro_core
+  - server/ai-proxy
+  - tools/data_pipeline
+
+dev_dependencies:
+  very_good_analysis: ^10.0.0
