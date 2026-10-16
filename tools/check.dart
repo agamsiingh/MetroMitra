@@ -90,8 +90,8 @@ Future<void> main(List<String> args) async {
   } else {
     _section('offline build skipped (no data/cache/sources.lock.json)');
   }
-  _section('no dataset bundled with the app');
-  if (!_noBundledDataset()) _fail('no dataset bundled with the app');
+  _section('bundled dataset is release-only');
+  if (!_bundledDatasetIsRelease()) _fail('bundled dataset is release-only');
   _section('secrets scan');
   if (secrets.main() != 0) _fail('secrets scan');
   _section('metro_core purity');
@@ -135,19 +135,62 @@ bool _realDataGuards(String reportPath) {
 }
 
 /// A draft (or any) dataset must never ship inside the app assets.
-bool _noBundledDataset() {
+/// Only `app/assets/data/metro.sqlite` may be bundled, and only when it passes
+/// release validation (never a draft or test dataset).
+bool _bundledDatasetIsRelease() {
   final dir = Directory('app/assets/data');
   final found = [
     if (dir.existsSync())
       for (final f in dir.listSync(recursive: true))
         if (f is File && RegExp(r'\.(sqlite|db|json)$').hasMatch(f.path))
-          f.path,
+          f.path.replaceAll(r'\', '/'),
   ];
-  if (found.isNotEmpty) {
-    stderr.writeln('dataset files in app assets: $found');
+  if (found.isEmpty) {
+    stdout.writeln('ok (nothing bundled)');
+    return true;
+  }
+  if (found.length != 1 || !found.single.endsWith('/metro.sqlite')) {
+    stderr.writeln('unexpected dataset files in app assets: $found');
     return false;
   }
-  stdout.writeln('ok');
+  final r = Process.runSync('dart', [
+    'run',
+    'tools/data_pipeline/bin/build.dart',
+    'validate',
+    '--input',
+    found.single,
+  ], runInShell: true);
+  stdout.write(r.stdout);
+  stderr.write(r.stderr);
+  if (r.exitCode != 0) {
+    stderr.writeln('bundled dataset is not a valid release dataset');
+    return false;
+  }
+  // validate checks structure only; stage and test-data live in meta.
+  final m = Process.runSync('dart', [
+    'run',
+    'tools/data_pipeline/bin/build.dart',
+    'inspect',
+    '--input',
+    found.single,
+    '--table',
+    'meta',
+  ], runInShell: true);
+  final meta = <String, Object?>{
+    for (final line in '${m.stdout}'.split('\n'))
+      if (line.trim().startsWith('{'))
+        if (jsonDecode(line) case {'key': final String k, 'value': final v})
+          k: v,
+  };
+  if (m.exitCode != 0 ||
+      meta['stage'] != 'release' ||
+      meta.keys.any((k) => k.contains('test'))) {
+    stderr.writeln(
+      'bundled dataset must be stage "release" and not test data: $meta',
+    );
+    return false;
+  }
+  stdout.writeln('ok (release dataset ${meta['dataset_version']})');
   return true;
 }
 

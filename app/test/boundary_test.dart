@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:metro_core/metro_core.dart';
 
 /// The app consumes metro_core only through its public library, and metro_core
 /// stays UI-free (the latter is also enforced by tools/check.dart).
@@ -59,7 +60,7 @@ void main() {
     }
   });
 
-  test('no dataset is bundled with the app', () {
+  test('only a release dataset is ever bundled', () {
     final bundled = Directory('assets/data')
         .listSync(recursive: true)
         .whereType<File>()
@@ -69,7 +70,12 @@ void main() {
               f.path.endsWith('.db') ||
               f.path.endsWith('.json'),
         );
-    expect(bundled, isEmpty, reason: 'the draft dataset must not be bundled');
+    for (final f in bundled) {
+      expect(f.path.endsWith('metro.sqlite'), isTrue, reason: f.path);
+      // Release validation: throws for draft or test data.
+      final snap = DatasetReader.readFile(f.path);
+      expect(snap.meta[MetaKeys.stage], 'release', reason: f.path);
+    }
   });
 
   test('only shared/location touches the platform location plugin', () {

@@ -133,3 +133,11 @@ Single source of truth for "where are we". Update at the end of every session.
 - Emulator (fresh wipe; the old image had a corrupt system permissions file): profile build with Supabase on fetched
   and cached the live settings; Go and Map screens OK, all map buttons shown as the flags say.
 - Owner still to do: turn off e-mail sign-up; try an edit (banner) and restart the app to see it.
+
+## 2026-10-16 - dataset reaches `release`
+- 72 station Hindi names + DMRC operator Hindi name added to `overlays.yaml`, each citing its hi.wikipedia.org article
+  (Yamuna Bank: article title says "यमुना घाट", article text says "यमुना बैंक"; the text/English name is used).
+  Wikidata refreshed (no new names); Overpass was down (HTTP 502), OSM cache unchanged.
+- Build stage is now `release` (0 errors). Dataset bundled in `app/assets/data/metro.sqlite`; the boundary test and
+  `tools/check.dart` now allow only a release, non-test bundled dataset. All checks green.
+- Release AAB + APK built with Supabase settings; draft banner no longer shows.

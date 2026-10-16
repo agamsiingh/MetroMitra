@@ -1,12 +1,16 @@
 # Release checklist (Google Play)
 
-## Why there is no upload-ready AAB yet
-Release builds are **strict by design**: they load only a dataset whose stage is `release` (validated, not test data).
-The current dataset is `draft` (unverified fares, gates, timings; 72 stations without Hindi names; Pink Line 46 vs 45
-official; see `docs/known-issues.md`), and release builds ignore the draft switch. An AAB built today would open to
-"Draft data not allowed" and could not be used. The "Draft data - not verified" banner is also deliberately kept: it is
-the honest label for unverified data and is only shown while the data is a draft. It disappears by itself when a
-`release` dataset is built from verified data. Removing it while the data is unverified would mislead riders.
+## Dataset status (2026-10-16)
+The dataset now builds as stage `release`: the only release blocker was 72 stations + the operator without a Hindi
+name; those were filled from Hindi Wikipedia article titles (cited per station in `data/curated/overlays.yaml`,
+community-level source, not DMRC signage). Release builds bundle `app/assets/data/metro.sqlite`; `tools/check.dart`
+refuses a bundled file that is not stage `release` or is test data. The "Draft data" banner is gone because the data
+is no longer a draft. Gates, platforms, timings, facilities and fares are still absent from the dataset; the app
+reports them as unknown rather than guessing.
+
+Refresh the bundle before every release:
+`dart run tools/data_pipeline/bin/build.dart build --offline --require-release` then copy
+`build/pipeline/metro.sqlite` to `app/assets/data/metro.sqlite`.
 
 ## One-time set-up (done)
 - Upload key created: `app/android/upload-keystore.jks` + `app/android/key.properties` (both git-ignored).
@@ -15,8 +19,9 @@ the honest label for unverified data and is only shown while the data is a draft
 - Enrol the app in **Play App Signing** when creating it in Play Console (recommended; Google keeps the app key).
 
 ## Before the first upload
-1. Verify the data and build a `release` dataset (`docs/metro-data-sources.md`, `docs/known-issues.md`).
-2. Bundle it into `app/assets/data/` (the pipeline writes `metro.sqlite` + manifest).
+1. Rebuild and bundle the release dataset (above). Open items in `docs/known-issues.md` (Pink Line 46 vs 45, Dhaula
+   Kuan walkway, DMRC map licence) are worth fixing first.
+2. Spot-check Hindi names against station signage when possible (they come from Wikipedia).
 3. Fill the placeholders in `privacy-policy.html` and host it (for example GitHub Pages) at a public https URL.
 4. Create the app in Play Console; fill Data safety and App content from `data-safety.md`; paste `listing.md`.
 5. Make the graphics listed in `listing.md`.

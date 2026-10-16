@@ -5,7 +5,7 @@ Open items only; history is in progress.md. Updated 2026-10-07 (after M11).
 | Area | Issue | Owner / next step |
 |---|---|---|
 | Licensing | OPEN-2 (ODbL for the dataset) and OTD/DMRC permission unresolved | Owner decision; release blocker |
-| Data | Dataset is `draft`: no gates, platforms, timings, facilities, parking, fares; 72 stations lack Hindi names; 14 name conflicts; travel-time parameters not approved (ADR-035) | Owner curation (`data/curated/`) |
+| Data | Dataset is `release` (2026-10-16) but still has no gates, platforms, timings, facilities, parking, fares; 72 Hindi names come from hi.wikipedia.org (not yet checked against signage); 14 name conflicts; travel-time parameters not approved (ADR-035) | Owner curation (`data/curated/`) |
 | Updates | No update host and no production public key: `trustedPublicKeys` empty, `METROMITRA_UPDATE_URL` empty, so updates are off | Owner: host + `keygen` (private key in CI secrets only) |
 | Online AI | No proxy deployed, no model key, `METROMITRA_AI_URL` empty | Owner: deploy `server/ai-proxy` behind TLS, set `AI_API_KEY` |
 | Data | Pink Line: one station of Majlis Park - Maujpur is under construction per DMRC but unidentified; dataset shows all 8 as open | Owner: confirm which station, then curate |

@@ -18,8 +18,9 @@ release: { patch: 0 }
 operators:
   - osm_operator: "Delhi Metro Rail Corporation Limited"
     id: dmrc
-    reason: "Stable short id for the operator named in OSM route relations."
-    source: mitra-curated
+    name_hi: "दिल्ली मेट्रो रेल कॉर्पोरेशन"
+    reason: "Stable short id for the operator named in OSM route relations; Hindi name from hi.wikipedia.org (article title)."
+    source: "mitra-curated; name_hi: hi.wikipedia.org interlanguage link of en.wikipedia.org/wiki/Delhi_Metro_Rail_Corporation"
     verified_on: "2026-10-05"
 stations:
   - id: rohini-west
@@ -28,6 +29,366 @@ stations:
     reason: "Former name of the station, kept so riders can still find it."
     source: "mitra-curated; renaming confirmed against en.wikipedia.org/wiki/List_of_Delhi_Metro_stations (reference only, nothing copied)"
     verified_on: "2026-10-05"
+  - id: akshardham
+    name_hi: "अक्षरधाम"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: अक्षरधाम मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: arjan-garh
+    name_hi: "अर्जन गढ़"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: अर्जन गढ़ मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: ashram
+    name_hi: "आश्रम"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: आश्रम मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: barakhambha-road
+    name_hi: "बाराखंबा रोड"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: बाराखंबा रोड मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: botanical-garden
+    name_hi: "बोटैनिकल गार्डन"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: बोटैनिकल गार्डन मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: chandni-chowk
+    name_hi: "चाँदनी चौक"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: चाँदनी चौक मेट्रो स्टेशन (दिल्ली) (station name only)"
+    verified_on: "2026-10-16"
+  - id: chawri-bazaar
+    name_hi: "चावड़ी बाज़ार"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: चावड़ी बाज़ार मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: chhatarpur
+    name_hi: "छत्तरपुर"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: छत्तरपुर मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: civil-lines
+    name_hi: "सिविल लाइंस"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: सिविल लाइंस मेट्रो स्टेशन (दिल्ली) (station name only)"
+    verified_on: "2026-10-16"
+  - id: dashrath-puri
+    name_hi: "दशरथपुरी"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: दशरथपुरी मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: delhi-aerocity
+    name_hi: "दिल्ली एरोसिटी"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: दिल्ली एरोसिटी मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: dhaula-kuan
+    name_hi: "धौला कुआँ"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: धौला कुआँ मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: dwarka-mor
+    name_hi: "द्वारका मोड़"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: द्वारका मोड़ मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: dwarka-sector-12
+    name_hi: "द्वारका सेक्टर 12"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: द्वारका सेक्टर 12 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: dwarka-sector-13
+    name_hi: "द्वारका सेक्टर 13"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: द्वारका सेक्टर 13 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: dwarka-sector-21
+    name_hi: "द्वारका सेक्टर 21"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: द्वारका सेक्टर 21 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: dwarka-sector-8
+    name_hi: "द्वारका सेक्टर 8"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: द्वारका सेक्टर 8 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: dwarka-sector-9
+    name_hi: "द्वारका सेक्टर 9"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: द्वारका सेक्टर 9 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: ghitorni
+    name_hi: "घिटोर्नी"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: घिटोर्नी मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: greater-kailash
+    name_hi: "ग्रेटर कैलाश"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: ग्रेटर कैलाश मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: green-park
+    name_hi: "ग्रीन पार्क"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: ग्रीन पार्क मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: gtb-nagar
+    name_hi: "गुरु तेग बहादुर नगर"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: गुरु तेग बहादुर नगर मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: hauz-khas
+    name_hi: "हौज़ खास"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: हौज़ खास मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: iit-delhi
+    name_hi: "आई.आई.टी"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: आई.आई.टी मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: indraprastha
+    name_hi: "इंद्रप्रस्थ"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: इंद्रप्रस्थ मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: jahangirpuri
+    name_hi: "जहांगीरपुरी"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: जहांगीरपुरी मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: jhandewalan
+    name_hi: "झंडेवालान"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: झंडेवालान मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: jor-bagh
+    name_hi: "जोर बाग"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: जोर बाग मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: kalkaji-mandir
+    name_hi: "कालकाजी मंदिर"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: कालकाजी मंदिर मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: mayur-vihar-extension
+    name_hi: "मयूर विहार एक्सटेंशन"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: मयूर विहार एक्सटेंशन मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: model-town
+    name_hi: "मॉडल टाउन"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: मॉडल टाउन मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: munirka
+    name_hi: "मुनिरका"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: मुनिरका मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: najafgarh
+    name_hi: "नजफगढ़"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नजफगढ़ मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: nangli
+    name_hi: "नंगली"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नंगली मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: nawada
+    name_hi: "नवादा"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नवादा मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: nehru-enclave
+    name_hi: "नेहरू एनक्लेव"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नेहरू एनक्लेव मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: new-ashok-nagar
+    name_hi: "न्यू अशोक नगर"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: न्यू अशोक नगर मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: noida-city-centre
+    name_hi: "नोएडा सिटी सेंटर"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नोएडा सिटी सेंटर मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: noida-electronic-city
+    name_hi: "नोएडा इलेक्ट्रॉनिक सिटी"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नोएडा इलेक्ट्रॉनिक सिटी मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: noida-sector-15
+    name_hi: "नोएडा सेक्टर 15"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नोएडा सेक्टर 15 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: noida-sector-18
+    name_hi: "नोएडा सेक्टर 18"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नोएडा सेक्टर 18 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: noida-sector-34
+    name_hi: "नोएडा सेक्टर 34"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नोएडा सेक्टर 34 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: noida-sector-52
+    name_hi: "नोएडा सेक्टर 52"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नोएडा सेक्टर 52 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: noida-sector-59
+    name_hi: "नोएडा सेक्टर 59"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नोएडा सेक्टर 59 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: noida-sector-61
+    name_hi: "नोएडा सेक्टर 61"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नोएडा सेक्टर 61 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: noida-sector-62
+    name_hi: "नोएडा सेक्टर 62"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: नोएडा सेक्टर 62 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: okhla-bird-sanctuary
+    name_hi: "ओखला पक्षी अभयारण्य"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: ओखला पक्षी अभयारण्य मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: okhla-nsic
+    name_hi: "ओखला एन.एस.आई.सी"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: ओखला एन.एस.आई.सी मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: palam
+    name_hi: "पालम"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: पालम मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: panchsheel-park
+    name_hi: "पंचशील पार्क"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: पंचशील पार्क मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: patel-chowk
+    name_hi: "पटेल चौक"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: पटेल चौक मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: raja-nahar-singh
+    name_hi: "राजा नाहर सिंह (बल्लभगढ़)"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: राजा नाहर सिंह (बल्लभगढ़) मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: rajendra-place
+    name_hi: "राजेंद्र प्लेस"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: राजेंद्र प्लेस मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: ramakrishna-ashram-marg
+    name_hi: "रामकृष्ण आश्रम मार्ग"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: रामकृष्ण आश्रम मार्ग मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: rohini-sector-18-19
+    name_hi: "रोहिणी सेक्टर 18, 19"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: रोहिणी सेक्टर 18, 19 मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: saket
+    name_hi: "साकेत"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: साकेत मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: samaypur-badli
+    name_hi: "समयपुर बादली"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: समयपुर बादली मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: sarai-kale-khan-nizamuddin
+    name_hi: "सराय काले खाँ - निज़ामुद्दीन"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: सराय काले खाँ - निज़ामुद्दीन मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: shankar-vihar
+    name_hi: "शंकर विहार"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: शंकर विहार मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: shastri-park
+    name_hi: "शास्त्री पार्क"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: शास्त्री पार्क मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: shivaji-stadium
+    name_hi: "शिवाजी स्टेडियम"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: शिवाजी स्टेडियम मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: shree-ram-mandir-mayur-vihar
+    name_hi: "श्री राम मंदिर मयूर विहार"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: श्री राम मंदिर मयूर विहार मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: sukhdev-vihar
+    name_hi: "सुखदेव विहार"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: सुखदेव विहार मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: sultanpur
+    name_hi: "सुलतानपुर"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: सुलतानपुर मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: terminal-1-igi-airport
+    name_hi: "टर्मिनल 1 आई.जी.आई एयरपोर्ट"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: टर्मिनल 1 आई.जी.आई एयरपोर्ट मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: uttam-nagar-east
+    name_hi: "उत्तम नगर पूर्व"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: उत्तम नगर पूर्व मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: uttam-nagar-west
+    name_hi: "उत्तम नगर पश्चिम"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: उत्तम नगर पश्चिम मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: vasant-vihar
+    name_hi: "वसंत विहार"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: वसंत विहार मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: vidhan-sabha
+    name_hi: "विधान सभा"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: विधान सभा मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: vinobapuri
+    name_hi: "विनोबापुरी"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: विनोबापुरी मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: vishwa-vidyalaya
+    name_hi: "विश्वविद्यालय"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: विश्वविद्यालय मेट्रो स्टेशन (station name only)"
+    verified_on: "2026-10-16"
+  - id: yamuna-bank
+    name_hi: "यमुना बैंक"
+    reason: "Hindi name was missing in OSM and Wikidata."
+    source: "hi.wikipedia.org article: यमुना घाट मेट्रो स्टेशन (name as written in the article text) (station name only)"
+    verified_on: "2026-10-16"
 station_merges:
   - id: anand-vihar
     members: [anand-vihar-blue-line@blue-line, anand-vihar-pink-line@pink-line]

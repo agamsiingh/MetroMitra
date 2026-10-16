@@ -13,14 +13,14 @@
       "source_version": "2026-10-05T13:34:05Z"
     },
     "wikidata": {
-      "bytes": 300827,
+      "bytes": 300670,
       "endpoint": "https://query.wikidata.org/sparql",
-      "file": "wikidata.763936d83a96.json",
+      "file": "wikidata.d63f8ec4c794.json",
       "license": "CC0-1.0",
       "records": 309,
       "request_sha256": "b03127247d4074d05cd8b16dbd829e97619b706ea7607abfd699972356b5dc22",
-      "retrieved_at": "2026-10-05T13:35:51Z",
-      "sha256": "763936d83a96d79f1b1d3bfefa880d3a63df05add2353ddef2ea07829a6edb4e"
+      "retrieved_at": "2026-10-16T17:47:37Z",
+      "sha256": "d63f8ec4c79469358ece19b6fbb02967ed12eb3da683ae067751f40e65e53cfe"
     }
   }
 }
