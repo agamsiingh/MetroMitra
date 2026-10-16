@@ -141,3 +141,11 @@ Single source of truth for "where are we". Update at the end of every session.
 - Build stage is now `release` (0 errors). Dataset bundled in `app/assets/data/metro.sqlite`; the boundary test and
   `tools/check.dart` now allow only a release, non-test bundled dataset. All checks green.
 - Release AAB + APK built with Supabase settings; draft banner no longer shows.
+
+## 2026-10-17 - Home grid, Metro lines, About
+- New first tab **Home**: tile grid (route, map, line diagram, metro lines, nearby, ask, about). Tiles exist only for
+  features with real data; no fares/gates/timings/parking tiles until that data is verified.
+- New screens: Metro lines (name, colour, station count from the dataset), About (developer Agam Singh with photo
+  `app/assets/brand/developer.jpg`, promise, dataset counts, DMRC disclaimer, contact). English + Hindi strings.
+- Layout is inspired by common transit-app home grids, not a copy of any other app (text, name and bio are original).
+- Tests: `home_grid_test` (4); bootstrap/harness tests adjusted for the new first screen. 350 app tests pass.

@@ -109,7 +109,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(key('boot-loading'), findsNothing);
-      expect(find.text('Where do you want to go?'), findsOneWidget);
+      expect(key('home-tile-route'), findsOneWidget);
     });
 
     testWidgets('Try again re-runs bootstrap and recovers', (tester) async {
@@ -143,7 +143,7 @@ void main() {
       await tester.tap(find.text('Try again'));
       await tester.pumpAndSettle();
       expect(calls, 2);
-      expect(find.text('Where do you want to go?'), findsOneWidget);
+      expect(key('home-tile-route'), findsOneWidget);
     });
   });
 
@@ -192,12 +192,14 @@ void main() {
       tester,
     ) async {
       final c = await pumpReal(tester);
-      expect(find.text('Where do you want to go?'), findsOneWidget);
+      expect(key('home-tile-route'), findsOneWidget);
       expect(
         find.text('TEST DATA — not real metro information.'),
         findsOneWidget,
       );
 
+      await tester.tap(key('home-tile-route'));
+      await tester.pumpAndSettle();
       await pickStation(tester, JourneyEnd.from, 'test alpha', 'test-alpha');
       await pickStation(tester, JourneyEnd.to, 'test iota', 'test-iota');
       expect(selection(c).fromId, 'test-alpha');

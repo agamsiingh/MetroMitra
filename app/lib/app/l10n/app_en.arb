@@ -1243,5 +1243,43 @@
   },
   "overviewTitle": "Overview map",
   "overviewOpen": "Overview map: every station",
-  "overviewNotToScale": "Map not to scale. Pinch to zoom."
+  "overviewNotToScale": "Map not to scale. Pinch to zoom.",
+  "navHome": "Home",
+  "homeTileRoute": "Find metro route",
+  "homeTileMap": "Metro map",
+  "homeTileOverview": "Line diagram",
+  "homeTileLines": "Metro lines",
+  "homeTileNearby": "Metro near me",
+  "homeTileAsk": "Ask MetroMitra",
+  "homeTileAbout": "About",
+  "linesTitle": "Metro lines",
+  "linesSubtitle": "{count} stations",
+  "@linesSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "linesEmpty": "No lines in the data.",
+  "aboutTitle": "About",
+  "aboutDevelopedBy": "DEVELOPED BY",
+  "aboutDeveloperName": "Agam Singh",
+  "aboutIntro": "Hi, I'm Agam. I built MetroMitra because finding your way around the Delhi Metro should not be confusing. It works offline, needs no account, and says so when it does not know something instead of guessing.",
+  "aboutPromiseTitle": "What MetroMitra promises",
+  "aboutPromiseBody": "Routes, interchanges and the map come from open data and work without internet. Anything that is not verified is labelled, and anything unknown is left blank, never invented. Your location stays on your phone.",
+  "aboutDataTitle": "In this version",
+  "aboutStations": "STATIONS",
+  "aboutLines": "LINES",
+  "aboutDataNote": "Fares, gates, platforms and timings will appear once they are verified.",
+  "aboutDisclaimer": "MetroMitra is an independent app and is not affiliated with or endorsed by the Delhi Metro Rail Corporation (DMRC).",
+  "aboutContact": "Contact: agamcoder@gmail.com",
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  }
 }

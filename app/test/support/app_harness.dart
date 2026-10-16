@@ -75,10 +75,10 @@ Future<ProviderContainer> pumpApp(
     ),
   );
   await tester.pumpAndSettle();
-  if (location != null) {
-    container.read(routerProvider).go(location);
-    await tester.pumpAndSettle();
-  }
+  // The app opens on the Home grid; most tests exercise the planner, so they
+  // start on /go unless a location is given.
+  container.read(routerProvider).go(location ?? Routes.go);
+  await tester.pumpAndSettle();
   return container;
 }
 
