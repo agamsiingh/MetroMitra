@@ -34,14 +34,6 @@ class HomeGridScreen extends ConsumerWidget {
         scheme.onTertiaryContainer,
       ),
       _Tile(
-        'overview',
-        l10n.homeTileOverview,
-        Icons.timeline_rounded,
-        '${Routes.map}/overview',
-        scheme.secondaryContainer,
-        scheme.onSecondaryContainer,
-      ),
-      _Tile(
         'lines',
         l10n.homeTileLines,
         Icons.stacked_line_chart_rounded,

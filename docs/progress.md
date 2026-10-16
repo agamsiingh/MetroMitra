@@ -149,3 +149,10 @@ Single source of truth for "where are we". Update at the end of every session.
   `app/assets/brand/developer.jpg`, promise, dataset counts, DMRC disclaimer, contact). English + Hindi strings.
 - Layout is inspired by common transit-app home grids, not a copy of any other app (text, name and bio are original).
 - Tests: `home_grid_test` (4); bootstrap/harness tests adjusted for the new first screen. 350 app tests pass.
+
+## 2026-10-17 - Map tab = overall map
+- Map tab opens the overview diagram with search, live location, zoom, tap-for-station, journey rings; old rough map
+  removed from the tab (still used by "route on map"). New `overall_map_test` (12); obsolete pixel tests removed.
+- Fixed while testing: zoom factor was read with getMaxScaleOnAxis (z=1 hid zoomed-out scales); degenerate straight-line
+  networks made the fit ~0.
+- Admin flag `show_overview_map` is retired (label says so; the app ignores it).

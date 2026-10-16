@@ -6,10 +6,20 @@ import 'package:metromitra/features/map/presentation/overview_map.dart';
 import 'support/app_harness.dart';
 import 'support/test_network.dart';
 
+RenderCustomPaint _base(WidgetTester tester) =>
+    tester.renderObject(
+          find
+              .descendant(
+                of: key('map-canvas'),
+                matching: find.byType(CustomPaint),
+              )
+              .first,
+        )
+        as RenderCustomPaint;
+
 /// What the overview canvas painted (circles and text paragraphs).
 ({int circles, int paragraphs, int lines}) _painted(WidgetTester tester) {
-  final render =
-      tester.renderObject(key('overview-canvas')) as RenderCustomPaint;
+  final render = _base(tester);
   final canvas = TestRecordingCanvas();
   render.painter!.paint(canvas, render.size);
   var circles = 0;
@@ -27,13 +37,11 @@ import 'support/test_network.dart';
 }
 
 void main() {
-  testWidgets('opens from the Map tab and names every station', (
+  testWidgets('the Map tab shows the overview and names every station', (
     tester,
   ) async {
     await pumpApp(tester, location: '/map');
-    await tester.tap(key('map-overview'));
-    await tester.pumpAndSettle();
-    expect(key('overview-canvas'), findsOneWidget);
+    expect(key('map-canvas'), findsOneWidget);
     final snap = demoNetwork();
     final p = _painted(tester);
     // every station is a ring (+ inner dots for interchanges) and is labelled
@@ -46,8 +54,6 @@ void main() {
     tester,
   ) async {
     final c = await pumpApp(tester, location: '/map');
-    await tester.tap(key('map-overview'));
-    await tester.pumpAndSettle();
     final snap = demoNetwork();
     expect(
       find.descendant(
@@ -63,9 +69,8 @@ void main() {
   testWidgets('labels carry both scripts; Hindi interface swaps the order', (
     tester,
   ) async {
-    await pumpApp(tester, location: '/map/overview');
-    final render =
-        tester.renderObject(key('overview-canvas')) as RenderCustomPaint;
+    await pumpApp(tester, location: '/map');
+    final render = _base(tester);
     final painter = render.painter! as OverviewPainter;
     final texts = [
       for (final l in painter.layout.labels) l.painter.text!.toPlainText(),
@@ -76,9 +81,8 @@ void main() {
   testWidgets('the layout never puts two labels on top of each other', (
     tester,
   ) async {
-    await pumpApp(tester, location: '/map/overview');
-    final render =
-        tester.renderObject(key('overview-canvas')) as RenderCustomPaint;
+    await pumpApp(tester, location: '/map');
+    final render = _base(tester);
     final layout = (render.painter! as OverviewPainter).layout;
     final rects = [
       for (final l in layout.labels)

@@ -13,6 +13,7 @@ import 'package:metromitra/features/map/application/live_tracking.dart';
 import 'package:metromitra/features/map/application/map_overlay.dart';
 import 'package:metromitra/features/map/application/map_provider.dart';
 import 'package:metromitra/features/map/presentation/network_map.dart';
+import 'package:metromitra/features/map/presentation/overview_map.dart';
 import 'package:metromitra/features/remote_config/application/remote_config_providers.dart';
 import 'package:metromitra/shared/format/format.dart';
 import 'package:metromitra/shared/location/location_source.dart';
@@ -51,10 +52,6 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   /// Station picked with the map search (ringed, labelled, framed).
   String? _foundId;
 
-  /// The latest explicit framing (search result or first live fix); wins
-  /// over the initial frame while the screen is open.
-  MapRect? _frame;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -76,11 +73,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       builder: (_) => _MapSearchSheet(services: services),
     );
     if (id == null || !mounted) return;
-    final f = ref.read(mapGeometryProvider).framingForStation(id);
-    setState(() {
-      _foundId = id;
-      if (f != null) _frame = f;
-    });
+    setState(() => _foundId = id);
   }
 
   @override
@@ -92,13 +85,6 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     final focusStationId = widget.focusStationId;
     final tracking = ref.watch(liveTrackingProvider);
     final flags = ref.watch(remoteConfigProvider.select((c) => c.flags));
-    ref.listen(liveTrackingProvider, (prev, next) {
-      // frame the user + the nearest station once, at the first fix
-      if (prev is! TrackingOn && next is TrackingOn && next.frame != null) {
-        setState(() => _frame = next.frame);
-      }
-    });
-
     Widget body;
     if (geometry == null) {
       body = StateView(
@@ -133,11 +119,6 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         message: l10n.mapStationNoCoordsBody,
       );
     } else {
-      final frame =
-          _frame ??
-          (focusStationId == null
-              ? geometry.networkFrame!
-              : geometry.framingForStation(focusStationId)!);
       final on = tracking is TrackingOn ? tracking : null;
       final point = on?.point;
       final active = tracking is TrackingOn || tracking is TrackingStarting;
@@ -159,10 +140,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             ),
           if (tracking is! TrackingOff) _TrackingPanel(state: tracking),
           Expanded(
-            child: NetworkMap(
+            child: OverviewMapView(
               geometry: geometry,
               snapshot: services.snapshot,
-              frame: frame,
+              focusId: focusStationId,
               fromId: journey.fromId,
               toId: journey.toId,
               highlightId: _foundId,
@@ -190,7 +171,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               onStationTap: (id) => openStation(context, id),
             ),
           ),
-          _Attribution(services: services),
+          OverviewLegend(snapshot: services.snapshot),
         ],
       );
     }
@@ -198,13 +179,6 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       appBar: AppBar(
         title: Text(l10n.mapTitle),
         actions: [
-          if (geometry != null && !geometry.isEmpty && flags.showOverviewMap)
-            IconButton(
-              key: const Key('map-overview'),
-              tooltip: l10n.overviewOpen,
-              icon: const Icon(Icons.map_outlined),
-              onPressed: () => context.push('/map/overview'),
-            ),
           if (flags.showDmrcMap)
             IconButton(
               key: const Key('map-dmrc'),
@@ -455,31 +429,6 @@ class _MapSearchSheetState extends State<_MapSearchSheet> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _Attribution extends StatelessWidget {
-  const _Attribution({required this.services});
-
-  final MetroServices services;
-
-  @override
-  Widget build(BuildContext context) {
-    final text = services.snapshot.meta[MetaKeys.attribution];
-    if (text == null || text.isEmpty) return const SizedBox.shrink();
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.screenPadding,
-        vertical: AppSpacing.unit * 2,
-      ),
-      child: Text(
-        AppLocalizations.of(context).mapAttribution(text),
-        key: const Key('map-attribution'),
-        style: Theme.of(context).textTheme.bodySmall,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
       ),
     );
   }

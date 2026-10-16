@@ -9,7 +9,6 @@ void main() {
     for (final id in [
       'route',
       'map',
-      'overview',
       'lines',
       'nearby',
       'ask',

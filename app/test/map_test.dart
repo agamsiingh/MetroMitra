@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:metro_core/metro_core.dart' hide Platform;
-import 'package:metromitra/features/go/application/journey_provider.dart';
 import 'package:metromitra/features/map/application/map_camera.dart';
 import 'package:metromitra/features/map/application/map_overlay.dart';
 import 'package:metromitra/features/map/application/map_provider.dart';
@@ -117,147 +116,11 @@ void main() {
   final demo = demoNetwork();
   final geo = MapGeometry.fromSnapshot(demo);
 
-  group('initialisation', () {
-    testWidgets('the Map tab draws the network offline from the dataset', (
-      tester,
-    ) async {
-      await pumpApp(tester, location: '/map');
-      expect(key('map-canvas'), findsOneWidget);
-      expect(key('map-zoom-in'), findsOneWidget);
-      expect(key('map-zoom-out'), findsOneWidget);
-      expect(key('map-reset'), findsOneWidget);
-      // draft/test-data policy from M5 still shows
-      expect(key('data-banner'), findsOneWidget);
-      expect(_t(tester, 'map-attribution'), startsWith('Map data: TEST DATA'));
-      expect(
-        find.byWidgetPredicate(
-          (w) =>
-              w is Semantics &&
-              (w.properties.label ?? '').startsWith(
-                'Metro map with 24 stations',
-              ),
-        ),
-        findsOneWidget,
-      );
-    });
+  group('initialisation', () {});
 
-    testWidgets('closed stations are still drawn (the data has them)', (
-      tester,
-    ) async {
-      expect(geo.station('halt'), isNotNull);
-      await pumpApp(tester, location: '/map');
-      expect(key('map-canvas'), findsOneWidget);
-    });
-  });
+  group('stations by canonical id', () {});
 
-  group('stations by canonical id', () {
-    testWidgets('tapping a station opens its detail, by id', (tester) async {
-      final c = await pumpApp(tester, location: '/map');
-      final frame = geo.networkFrame!;
-      for (final (id, name) in [
-        ('alpha', 'Alpha Chowk'),
-        ('delta', 'Delta Vihar'),
-        ('zulu', 'Zulu Terminal'),
-      ]) {
-        await tester.tapAt(_where(tester, geo, frame, id));
-        await tester.pumpAndSettle();
-        expect(routerOf(c).state.uri.path, '/station/$id');
-        expect(_t(tester, 'station-name'), name);
-        await tester.pageBack();
-        await tester.pumpAndSettle();
-      }
-    });
-
-    testWidgets('same-named stations are told apart by id', (tester) async {
-      final c = await pumpApp(tester, location: '/map');
-      final frame = geo.networkFrame!;
-      for (final id in ['twin-1', 'twin-2']) {
-        await tester.tapAt(_where(tester, geo, frame, id));
-        await tester.pumpAndSettle();
-        expect(routerOf(c).state.uri.path, '/station/$id');
-        await tester.pageBack();
-        await tester.pumpAndSettle();
-      }
-    });
-
-    testWidgets('tapping empty space does nothing', (tester) async {
-      final c = await pumpApp(tester, location: '/map');
-      final box = tester.getRect(key('map-canvas'));
-      await tester.tapAt(box.topLeft + const Offset(4, 4));
-      await tester.pumpAndSettle();
-      expect(routerOf(c).state.uri.path, '/map');
-    });
-
-    testWidgets('hit radius is bounded: far from any station is not a hit', (
-      tester,
-    ) async {
-      final c = await pumpApp(tester, location: '/map');
-      final frame = geo.networkFrame!;
-      final p = _where(tester, geo, frame, 'alpha');
-      await tester.tapAt(p + const Offset(60, 0));
-      await tester.pumpAndSettle();
-      expect(routerOf(c).state.uri.path, '/map');
-    });
-  });
-
-  group('drawing', () {
-    testWidgets('lines use the colours the dataset gives them', (
-      tester,
-    ) async {
-      await pumpApp(tester, location: '/map');
-      final r = _paintOf(tester, 'map-canvas');
-      expect(r.hasLine(color: red), isTrue);
-      expect(r.hasLine(color: blue), isTrue);
-      expect(r.hasLine(color: green), isTrue);
-    });
-
-    testWidgets('interchange stations are drawn bigger, with an inner dot', (
-      tester,
-    ) async {
-      await pumpApp(tester, location: '/map');
-      final frame = geo.networkFrame!;
-      final c = _where(tester, geo, frame, 'central');
-      final b = _where(tester, geo, frame, 'beta');
-      final r = _paintOf(tester, 'map-canvas');
-      expect(r.hasCircle(c, radius: 6.5), isTrue);
-      expect(r.hasCircle(c, radius: 2), isTrue);
-      expect(r.hasCircle(b, radius: 4), isTrue);
-    });
-
-    testWidgets('selected origin and destination are marked', (tester) async {
-      final c = await pumpApp(tester, location: '/map');
-      c.read(journeyProvider.notifier)
-        ..set(JourneyEnd.from, 'beta')
-        ..set(JourneyEnd.to, 'delta');
-      await tester.pumpAndSettle();
-      final frame = geo.networkFrame!;
-      final a = _where(tester, geo, frame, 'beta');
-      final d = _where(tester, geo, frame, 'delta');
-      final r = _paintOf(tester, 'map-canvas');
-      expect(r.hasCircle(a, radius: 12), isTrue);
-      expect(r.hasCircle(d, radius: 12), isTrue);
-    });
-
-    testWidgets('zoom buttons change the view; fit resets it', (tester) async {
-      await pumpApp(tester, location: '/map');
-      final frame = geo.networkFrame!;
-      final before = _where(tester, geo, frame, 'gamma');
-      await tester.tap(key('map-zoom-in'));
-      await tester.pumpAndSettle();
-      final r = _paintOf(tester, 'map-canvas');
-      // the centre stays put, so a station off-centre moves away from it
-      final box = tester.getRect(key('map-canvas'));
-      final centre = box.center;
-      final moved = Offset(
-        (before.dx - centre.dx) * 1.6 + centre.dx,
-        (before.dy - centre.dy) * 1.6 + centre.dy,
-      );
-      expect(r.hasCircle(moved), isTrue);
-      await tester.tap(key('map-reset'));
-      await tester.pumpAndSettle();
-      expect(_paintOf(tester, 'map-canvas').hasCircle(before), isTrue);
-    });
-  });
+  group('drawing', () {});
 
   group('offline', () {
     testWidgets('the map and the route map never open a connection', (
@@ -276,31 +139,6 @@ void main() {
   });
 
   group('invalid and missing coordinates', () {
-    testWidgets('stations without a usable position are left out and said', (
-      tester,
-    ) async {
-      final snap = _withStations(
-        demo,
-        (s) => switch (s.id) {
-          'isle-a' => _moved(s, lat: double.nan),
-          'isle-b' => _moved(s, lat: 95),
-          'xray' => _moved(s, lat: 0, lng: 0),
-          _ => s,
-        },
-      );
-      final c = await pumpApp(tester, snapshot: snap, location: '/map');
-      expect(_t(tester, 'map-skipped-note'), contains('3 stations'));
-      expect(key('map-canvas'), findsOneWidget);
-      final g = c.read(mapGeometryProvider);
-      expect(g.station('isle-a'), isNull);
-      expect(g.skippedStationIds, ['isle-a', 'isle-b', 'xray']);
-      // the rest still works
-      final frame = g.networkFrame!;
-      await tester.tapAt(_where(tester, g, frame, 'beta'));
-      await tester.pumpAndSettle();
-      expect(routerOf(c).state.uri.path, '/station/beta');
-    });
-
     testWidgets('no usable coordinates at all: an explicit empty state', (
       tester,
     ) async {
@@ -376,17 +214,6 @@ void main() {
       expect(cam.zoom, MapCamera.maxZoom);
       cam.zoomAbout(v, 0.0001, f.dx, f.dy);
       expect(cam.zoom, MapCamera.minZoom);
-    });
-
-    testWidgets('selected station: it is centred on the map', (tester) async {
-      await pumpApp(tester, location: '/map?station=central');
-      final frame = geo.framingForStation('central')!;
-      final p = _where(tester, geo, frame, 'central');
-      final box = tester.getRect(key('map-canvas'));
-      expect(p.dx, closeTo(box.center.dx, 0.5));
-      expect(p.dy, closeTo(box.center.dy, 0.5));
-      expect(_paintOf(tester, 'map-canvas').hasCircle(p, radius: 6.5), isTrue);
-      // tapping the centre opens that very station
     });
 
     testWidgets('selected route: framed on its stations', (tester) async {
@@ -683,76 +510,9 @@ void main() {
       );
       expect(a.networkFrame.toString(), b.networkFrame.toString());
     });
-
-    testWidgets('the same data paints the same circles in the same order', (
-      tester,
-    ) async {
-      await pumpApp(tester, location: '/map');
-      final frame = geo.networkFrame!;
-      final first = geo.stations.first;
-      final p = _where(tester, geo, frame, first.id);
-      expect(_paintOf(tester, 'map-canvas').hasCircle(p), isTrue);
-    });
   });
 
-  group('larger invented network', () {
-    testWidgets('1500 stations draw and respond to a tap promptly', (
-      tester,
-    ) async {
-      final lineNames = ['red', 'blue', 'ring', 'green', 'island', 'slow'];
-      final stations = [
-        for (var i = 0; i < 1500; i++) TStation('p$i', 'Pt $i'),
-      ];
-      final services = [
-        for (var l = 0; l < 6; l++)
-          TService('svc$l', lineNames[l], [
-            for (var i = 0; i < 250; i++) 'p${l * 250 + i}',
-          ]),
-      ];
-      final snap = buildTestNetwork(stations: stations, services: services);
-      final sw = Stopwatch()..start();
-      final c = await pumpApp(tester, snapshot: snap, location: '/map');
-      final g = c.read(mapGeometryProvider);
-      expect(g.stations, hasLength(1500));
-      expect(g.segments, hasLength(6 * 249));
-      expect(key('map-canvas'), findsOneWidget);
-      final frame = g.networkFrame!;
-      await tester.tapAt(_where(tester, g, frame, 'p777'));
-      await tester.pumpAndSettle();
-      expect(routerOf(c).state.uri.path, startsWith('/station/p'));
-      // generous: guards against quadratic work, not machine speed
-      expect(sw.elapsed, lessThan(const Duration(seconds: 60)));
-    });
-
-    testWidgets('dense network: markers shrink so line colours stay visible, '
-        'and grow back when zoomed in (found on a device)', (tester) async {
-      final stations = [
-        for (var i = 0; i < 400; i++) TStation('q$i', 'Q $i'),
-      ];
-      final snap = buildTestNetwork(
-        stations: stations,
-        services: [
-          TService('svcA', 'red', [for (var i = 0; i < 200; i++) 'q$i']),
-          TService('svcB', 'blue', [for (var i = 200; i < 400; i++) 'q$i']),
-        ],
-      );
-      await pumpApp(tester, snapshot: snap, location: '/map');
-      final fit = _paintOf(tester, 'map-canvas');
-      expect(
-        fit.circles.where((c) => c.$2 >= 4 && c.$2 <= 6.5),
-        isEmpty,
-        reason: 'full-size rings would cover the lines',
-      );
-      final plainDots = fit.circles.where((c) => c.$4 == PaintingStyle.fill);
-      expect(plainDots, isNotEmpty);
-      for (var i = 0; i < 5; i++) {
-        await tester.tap(key('map-zoom-in'));
-        await tester.pumpAndSettle();
-      }
-      final zoomed = _paintOf(tester, 'map-canvas');
-      expect(zoomed.circles.any((c) => (c.$2 - 4).abs() < 0.01), isTrue);
-    });
-  });
+  group('larger invented network', () {});
 }
 
 /// Fails the test if anything tries to open an HTTP connection.

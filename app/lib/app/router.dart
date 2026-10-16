@@ -14,7 +14,6 @@ import 'package:metromitra/features/home/presentation/lines_screen.dart';
 import 'package:metromitra/features/journey/presentation/journey_screen.dart';
 import 'package:metromitra/features/map/presentation/dmrc_map_screen.dart';
 import 'package:metromitra/features/map/presentation/map_screen.dart';
-import 'package:metromitra/features/map/presentation/overview_map.dart';
 import 'package:metromitra/features/nearby/presentation/nearby_screen.dart';
 import 'package:metromitra/features/station/presentation/station_detail_screen.dart';
 
@@ -135,11 +134,6 @@ GoRouter buildRouter({String initialLocation = Routes.home}) {
                   focusStationId: state.uri.queryParameters['station'],
                 ),
                 routes: [
-                  GoRoute(
-                    path: 'overview',
-                    parentNavigatorKey: _rootKey,
-                    builder: (context, state) => const OverviewMapScreen(),
-                  ),
                   GoRoute(
                     path: 'dmrc',
                     parentNavigatorKey: _rootKey,

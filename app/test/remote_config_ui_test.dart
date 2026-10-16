@@ -49,7 +49,7 @@ void main() {
     expect(key('announcement'), findsNothing);
     await tester.tap(find.text('Map'));
     await tester.pumpAndSettle();
-    for (final k in ['map-overview', 'map-dmrc', 'map-search', 'map-track']) {
+    for (final k in ['map-dmrc', 'map-search', 'map-track']) {
       expect(key(k), findsOneWidget, reason: k);
     }
   });
@@ -116,7 +116,7 @@ void main() {
     ));
     await tester.tap(find.text('Map'));
     await tester.pumpAndSettle();
-    for (final k in ['map-overview', 'map-dmrc', 'map-search', 'map-track']) {
+    for (final k in ['map-dmrc', 'map-search', 'map-track']) {
       expect(key(k), findsNothing, reason: k);
     }
     expect(key('map-zoom-in'), findsOneWidget, reason: 'the map itself stays');

@@ -91,3 +91,12 @@ title bar "by agamsiingh"). Emulator: works but the page stays blank for about a
 before the map appears; adds ~20 MB to the APK (pdfium + file). **Release blocker (known-issues): DMRC artwork needs DMRC
 permission; the screen labels it "Official DMRC Map" although the file is edited and credited to another name; the label
 is hard-coded English (not in ARB).** Left as the owner added it.
+
+## 2026-10-17: the Map tab is the overall map
+The Map tab now opens the full-network diagram (`OverviewMapView`, laid out from the dataset, every station named in
+English and Hindi) instead of the geographic map. It carries every operation the old map had: pinch and zoom +/-/fit,
+tap a station for its detail (by canonical id), search a station (brought to the centre, ringed and named), live
+location (blue dot, nearest station panel; GPS stops when the tab is hidden), journey From/To rings, `?station=<id>`
+deep link, the DMRC PDF button, the legend. The separate "Overview map" screen and button are gone. The geographic
+`NetworkMap` is kept only for the route-on-map screen. A nearly straight network no longer shrinks the drawing to a
+speck (height is capped at 3x width and the drawing is centred).

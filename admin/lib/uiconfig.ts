@@ -39,7 +39,7 @@ export const CONFIG_KEYS = Object.keys(DEFAULTS) as ConfigKey[];
 
 export const FLAG_LABELS: Record<keyof Flags, string> = {
   online_ai: 'Online AI answers (Ask tab)',
-  show_overview_map: 'Overview map button',
+  show_overview_map: 'Overview map button (retired: the Map tab is now the overview)',
   show_dmrc_map: 'DMRC PDF map button',
   show_live_tracking: 'Live location button on the map',
   show_map_search: 'Station search on the map',

@@ -1,21 +1,22 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:metro_core/metro_core.dart' hide Platform;
 import 'package:metromitra/app/l10n/generated/app_localizations.dart';
 import 'package:metromitra/app/theme/tokens.dart';
-import 'package:metromitra/bootstrap/bootstrap_providers.dart';
 import 'package:metromitra/features/go/application/station_options.dart';
-import 'package:metromitra/features/map/application/map_provider.dart';
+import 'package:metromitra/features/map/presentation/network_map.dart';
 import 'package:metromitra/shared/format/format.dart';
-import 'package:metromitra/shared/widgets/data_banner.dart';
 import 'package:metromitra/shared/widgets/line_chip.dart';
-import 'package:metromitra/shared/widgets/state_view.dart';
 
 /// Width of the drawing in logical pixels; the viewer scales it to fit.
 const overviewWidth = 3200.0;
+
+/// The "you are here" dot (the same blue on every map, whatever the theme).
+const _userBlue = Color(0xFF1A73E8);
+
+/// Empty border around the drawing.
+const _overviewPad = 260.0;
 
 /// One placed label: where it goes and what it says.
 class OverviewLabel {
@@ -32,7 +33,15 @@ class OverviewLabel {
 /// labelled first, each label tries eight positions around its station and
 /// is skipped if it would overlap another.
 class OverviewLayout {
-  OverviewLayout._(this.size, this.points, this.labels);
+  OverviewLayout._(
+    this.size,
+    this.points,
+    this.labels,
+    this._minX,
+    this._minY,
+    this._scale,
+    this._offsetX,
+  );
 
   factory OverviewLayout.build({
     required MapGeometry geometry,
@@ -53,14 +62,25 @@ class OverviewLayout {
       minY = math.min(minY, s.y);
       maxY = math.max(maxY, s.y);
     }
-    const pad = 260.0;
+    const pad = _overviewPad;
     final spanX = math.max(maxX - minX, 1e-9);
     final spanY = math.max(maxY - minY, 1e-9);
-    final scale = (overviewWidth - 2 * pad) / spanX;
+    // Fit the width, but never let the drawing get absurdly tall (a network
+    // that is nearly a straight line): then the height decides, and the
+    // drawing is centred sideways.
+    const maxHeight = overviewWidth * 3;
+    final scale = math.min(
+      (overviewWidth - 2 * pad) / spanX,
+      (maxHeight - 2 * pad) / spanY,
+    );
+    final offsetX = (overviewWidth - 2 * pad - spanX * scale) / 2;
     final height = spanY * scale + 2 * pad;
     final points = {
       for (final s in stations)
-        s.id: Offset((s.x - minX) * scale + pad, (s.y - minY) * scale + pad),
+        s.id: Offset(
+          (s.x - minX) * scale + pad + offsetX,
+          (s.y - minY) * scale + pad,
+        ),
     };
 
     final placed = <Rect>[];
@@ -115,12 +135,30 @@ class OverviewLayout {
         break;
       }
     }
-    return OverviewLayout._(Size(overviewWidth, height), points, labels);
+    return OverviewLayout._(
+      Size(overviewWidth, height),
+      points,
+      labels,
+      minX,
+      minY,
+      scale,
+      offsetX,
+    );
   }
 
   final Size size;
   final Map<String, Offset> points;
   final List<OverviewLabel> labels;
+  final double _minX;
+  final double _minY;
+  final double _scale;
+  final double _offsetX;
+
+  /// Where a map-plane point (a station or a live position) lands on the drawing.
+  Offset project(double x, double y) => Offset(
+    (x - _minX) * _scale + _overviewPad + _offsetX,
+    (y - _minY) * _scale + _overviewPad,
+  );
 }
 
 class OverviewPainter extends CustomPainter {
@@ -182,20 +220,59 @@ class OverviewPainter extends CustomPainter {
       old.paper != paper;
 }
 
-/// "Overview map": the whole network with every station named, pinch to
-/// zoom. Opened from the Map tab.
-class OverviewMapScreen extends ConsumerStatefulWidget {
-  const OverviewMapScreen({super.key});
+/// The overall map: the whole network with every station named, pinch to
+/// zoom, tap a station for its detail, plus the user's marks on top (route
+/// ends, a searched station, the live position). One widget so the Map tab
+/// has every operation the older geographic map had.
+class OverviewMapView extends StatefulWidget {
+  const OverviewMapView({
+    required this.geometry,
+    required this.snapshot,
+    this.canvasKey = const Key('map-canvas'),
+    this.fromId,
+    this.toId,
+    this.highlightId,
+    this.focusId,
+    this.user,
+    this.extraControls = const [],
+    this.onStationTap,
+    super.key,
+  });
+
+  final MapGeometry geometry;
+  final MetroSnapshot snapshot;
+  final Key canvasKey;
+
+  /// Chosen journey ends, ringed on the map.
+  final String? fromId;
+  final String? toId;
+
+  /// Station found with the search: ringed, labelled and brought to the centre.
+  final String? highlightId;
+
+  /// Station to centre on when the map first opens (`?station=<id>`).
+  final String? focusId;
+
+  /// Live position; centred once when the first fix arrives.
+  final MapUser? user;
+
+  /// Round buttons stacked above the zoom buttons (live location).
+  final List<Widget> extraControls;
+  final void Function(String stationId)? onStationTap;
 
   @override
-  ConsumerState<OverviewMapScreen> createState() => _OverviewMapScreenState();
+  State<OverviewMapView> createState() => _OverviewMapViewState();
 }
 
-class _OverviewMapScreenState extends ConsumerState<OverviewMapScreen> {
+class _OverviewMapViewState extends State<OverviewMapView> {
+  static const _minScale = 0.05;
+  static const _maxScale = 3.0;
+
   OverviewLayout? _layout;
   Locale? _layoutLocale;
   Brightness? _layoutBrightness;
   final _transform = TransformationController();
+  Size _box = Size.zero;
   bool _fitted = false;
 
   @override
@@ -204,11 +281,22 @@ class _OverviewMapScreenState extends ConsumerState<OverviewMapScreen> {
     super.dispose();
   }
 
-  OverviewLayout _layoutFor(
-    BuildContext context,
-    MapGeometry geometry,
-    MetroSnapshot snapshot,
-  ) {
+  @override
+  void didUpdateWidget(OverviewMapView old) {
+    super.didUpdateWidget(old);
+    final layout = _layout;
+    if (layout == null || !_fitted) return;
+    if (widget.highlightId != null && widget.highlightId != old.highlightId) {
+      final p = layout.points[widget.highlightId];
+      if (p != null) _centerOn(p);
+    }
+    final u = widget.user;
+    if (u != null && old.user == null) {
+      _centerOn(layout.project(u.x, u.y), minScale: 0.45);
+    }
+  }
+
+  OverviewLayout _layoutFor(BuildContext context) {
     final locale = Localizations.localeOf(context);
     final theme = Theme.of(context);
     if (_layout != null &&
@@ -218,8 +306,8 @@ class _OverviewMapScreenState extends ConsumerState<OverviewMapScreen> {
     }
     final color = theme.colorScheme.onSurface;
     final layout = OverviewLayout.build(
-      geometry: geometry,
-      snapshot: snapshot,
+      geometry: widget.geometry,
+      snapshot: widget.snapshot,
       locale: locale,
       primary: TextStyle(
         color: color,
@@ -238,100 +326,318 @@ class _OverviewMapScreenState extends ConsumerState<OverviewMapScreen> {
     return layout;
   }
 
+  /// Zoom factor (x scale; z is not scaled, so getMaxScaleOnAxis would say 1
+  /// whenever the map is zoomed out).
+  double get _scale => _transform.value.entry(0, 0);
+
+  void _fit(OverviewLayout layout) {
+    final s = math.min(
+      _box.width / layout.size.width,
+      _box.height / layout.size.height,
+    );
+    _transform.value = Matrix4.identity()
+      ..translateByDouble(
+        (_box.width - layout.size.width * s) / 2,
+        (_box.height - layout.size.height * s) / 2,
+        0,
+        1,
+      )
+      ..scaleByDouble(s, s, 1, 1);
+  }
+
+  /// Puts [p] (drawing coordinates) in the middle of the view.
+  void _centerOn(Offset p, {double minScale = 0.5}) {
+    final s = _scale.clamp(minScale, _maxScale);
+    _transform.value = Matrix4.identity()
+      ..translateByDouble(
+        _box.width / 2 - p.dx * s,
+        _box.height / 2 - p.dy * s,
+        0,
+        1,
+      )
+      ..scaleByDouble(s, s, 1, 1);
+  }
+
+  void _zoomBy(double factor) {
+    final cur = _scale;
+    final target = (cur * factor).clamp(_minScale, _maxScale);
+    final f = target / cur;
+    final c = Offset(_box.width / 2, _box.height / 2);
+    _transform.value = Matrix4.identity()
+      ..translateByDouble(c.dx, c.dy, 0, 1)
+      ..scaleByDouble(f, f, 1, 1)
+      ..translateByDouble(-c.dx, -c.dy, 0, 1)
+      ..multiply(_transform.value);
+  }
+
+  /// Nearest station to a tap, within a finger's width on screen.
+  String? _stationAt(Offset local, OverviewLayout layout) {
+    final reach = math.max(26, 40 / _scale);
+    String? best;
+    var bestD = reach;
+    layout.points.forEach((id, p) {
+      final d = (p - local).distance;
+      if (d < bestD) {
+        bestD = d;
+        best = id;
+      }
+    });
+    return best;
+  }
+
+  TextPainter? _tag(String? id, Locale locale, TextStyle style) {
+    final st = id == null ? null : widget.snapshot.station(id);
+    if (st == null) return null;
+    final titles = stationTitles(
+      nameEn: st.nameEn,
+      nameHi: st.nameHi,
+      locale: locale,
+    );
+    return TextPainter(
+      text: TextSpan(text: titles.primary, style: style),
+      textDirection: Directionality.of(context),
+      maxLines: 1,
+    )..layout(maxWidth: 520);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final services = ref.watch(metroServicesProvider);
-    MapGeometry? geometry;
-    try {
-      geometry = ref.watch(mapGeometryProvider);
-    } on Object {
-      geometry = null;
-    }
-    Widget body;
-    if (geometry == null || geometry.isEmpty) {
-      body = StateView(
-        key: const Key('overview-unavailable'),
-        kind: StateViewKind.empty,
-        title: l10n.mapEmptyTitle,
-        message: l10n.mapEmptyBody,
-      );
-    } else {
-      final geo = geometry;
-      final layout = _layoutFor(context, geo, services.snapshot);
-      final lineColors = {
-        for (final l in services.snapshot.lines) l.id: colorFromHex(l.colorHex),
-      };
-      body = Column(
-        children: [
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, box) {
-                if (!_fitted && box.maxWidth > 0 && box.maxHeight > 0) {
-                  // first show: the whole network fits the screen
-                  final s = math.min(
-                    box.maxWidth / layout.size.width,
-                    box.maxHeight / layout.size.height,
-                  );
-                  _transform.value = Matrix4.identity()
-                    ..translateByDouble(
-                      (box.maxWidth - layout.size.width * s) / 2,
-                      (box.maxHeight - layout.size.height * s) / 2,
-                      0,
-                      1,
-                    )
-                    ..scaleByDouble(s, s, 1, 1);
-                  _fitted = true;
-                }
-                return ColoredBox(
-                  color: theme.colorScheme.surface,
-                  child: InteractiveViewer(
-                    key: const Key('overview-viewer'),
-                    transformationController: _transform,
-                    constrained: false,
-                    minScale: 0.05,
-                    boundaryMargin: const EdgeInsets.all(400),
-                    child: Semantics(
-                      label: l10n.mapSemantics(geo.stations.length),
-                      child: CustomPaint(
-                        key: const Key('overview-canvas'),
-                        size: layout.size,
-                        painter: OverviewPainter(
-                          geometry: geo,
-                          layout: layout,
-                          lineColors: lineColors,
-                          ink: theme.colorScheme.onSurface,
-                          paper: theme.colorScheme.surface,
+    final scheme = theme.colorScheme;
+    final layout = _layoutFor(context);
+    final lineColors = {
+      for (final l in widget.snapshot.lines) l.id: colorFromHex(l.colorHex),
+    };
+    final locale = Localizations.localeOf(context);
+    final tagStyle = TextStyle(
+      color: scheme.onInverseSurface,
+      fontSize: 24,
+      fontWeight: FontWeight.w700,
+    );
+    final tagged = {
+      if (widget.highlightId != null) widget.highlightId!,
+      if (widget.user?.nearestId != null) widget.user!.nearestId!,
+    };
+    return LayoutBuilder(
+      builder: (context, box) {
+        _box = Size(box.maxWidth, box.maxHeight);
+        if (!_fitted && box.maxWidth > 0 && box.maxHeight > 0) {
+          _fit(layout);
+          final focus = widget.focusId == null
+              ? null
+              : layout.points[widget.focusId];
+          if (focus != null) _centerOn(focus, minScale: 0.6);
+          _fitted = true;
+        }
+        return ColoredBox(
+          color: scheme.surface,
+          child: Stack(
+            children: [
+              InteractiveViewer(
+                key: const Key('overview-viewer'),
+                transformationController: _transform,
+                constrained: false,
+                minScale: _minScale,
+                maxScale: _maxScale,
+                boundaryMargin: const EdgeInsets.all(400),
+                child: Semantics(
+                  label: l10n.mapSemantics(widget.geometry.stations.length),
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTapUp: (d) {
+                      final id = _stationAt(d.localPosition, layout);
+                      if (id != null) widget.onStationTap?.call(id);
+                    },
+                    child: Stack(
+                      key: widget.canvasKey,
+                      children: [
+                        CustomPaint(
+                          size: layout.size,
+                          painter: OverviewPainter(
+                            geometry: widget.geometry,
+                            layout: layout,
+                            lineColors: lineColors,
+                            ink: scheme.onSurface,
+                            paper: scheme.surface,
+                          ),
                         ),
-                      ),
+                        CustomPaint(
+                          key: const Key('overview-marks'),
+                          size: layout.size,
+                          painter: OverviewMarksPainter(
+                            layout: layout,
+                            transform: _transform,
+                            fromId: widget.fromId,
+                            toId: widget.toId,
+                            highlightId: widget.highlightId,
+                            user: widget.user,
+                            fromColor: scheme.primary,
+                            toColor: scheme.tertiary,
+                            highlightColor: scheme.secondary,
+                            userColor: _userBlue,
+                            lostColor: scheme.outline,
+                            halo: scheme.surface,
+                            tagBackground: scheme.inverseSurface,
+                            tags: {
+                              for (final id in tagged)
+                                id: ?_tag(id, locale, tagStyle),
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              ),
+              PositionedDirectional(
+                end: 8,
+                bottom: 8,
+                child: Column(
+                  children: [
+                    for (final c in widget.extraControls) ...[
+                      c,
+                      const SizedBox(height: 8),
+                    ],
+                    MapRoundButton(
+                      key: const Key('map-zoom-in'),
+                      icon: Icons.add_rounded,
+                      tooltip: l10n.mapZoomIn,
+                      onPressed: () => _zoomBy(1.6),
+                    ),
+                    const SizedBox(height: 8),
+                    MapRoundButton(
+                      key: const Key('map-zoom-out'),
+                      icon: Icons.remove_rounded,
+                      tooltip: l10n.mapZoomOut,
+                      onPressed: () => _zoomBy(1 / 1.6),
+                    ),
+                    const SizedBox(height: 8),
+                    MapRoundButton(
+                      key: const Key('map-reset'),
+                      icon: Icons.center_focus_strong_outlined,
+                      tooltip: l10n.mapReset,
+                      onPressed: () => _fit(layout),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          _OverviewLegend(snapshot: services.snapshot),
-        ],
-      );
-    }
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.overviewTitle),
-        leading: BackButton(onPressed: () => context.pop()),
-      ),
-      body: Column(
-        children: [
-          const DataBanner(),
-          Expanded(child: body),
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
-class _OverviewLegend extends StatelessWidget {
-  const _OverviewLegend({required this.snapshot});
+/// Marks drawn over the map at a steady on-screen size whatever the zoom:
+/// journey ends, the searched station, the live position and name tags.
+class OverviewMarksPainter extends CustomPainter {
+  OverviewMarksPainter({
+    required this.layout,
+    required this.transform,
+    required this.fromId,
+    required this.toId,
+    required this.highlightId,
+    required this.user,
+    required this.fromColor,
+    required this.toColor,
+    required this.highlightColor,
+    required this.userColor,
+    required this.lostColor,
+    required this.halo,
+    required this.tagBackground,
+    required this.tags,
+  }) : super(repaint: transform);
+
+  final OverviewLayout layout;
+  final TransformationController transform;
+  final String? fromId;
+  final String? toId;
+  final String? highlightId;
+  final MapUser? user;
+  final Color fromColor;
+  final Color toColor;
+  final Color highlightColor;
+  final Color userColor;
+  final Color lostColor;
+  final Color halo;
+  final Color tagBackground;
+  final Map<String, TextPainter> tags;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // one screen pixel in drawing units: marks keep their size when zoomed
+    final px = 1 / transform.value.entry(0, 0);
+    void ring(String? id, Color color, double radius) {
+      final p = id == null ? null : layout.points[id];
+      if (p == null) return;
+      canvas
+        ..drawCircle(p, (radius + 3) * px, Paint()..color = halo)
+        ..drawCircle(
+          p,
+          radius * px,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 4 * px
+            ..color = color,
+        );
+    }
+
+    ring(fromId, fromColor, 14);
+    ring(toId, toColor, 14);
+    ring(highlightId, highlightColor, 18);
+
+    final u = user;
+    Offset? userAt;
+    if (u != null) {
+      userAt = layout.project(u.x, u.y);
+      final c = u.lost ? lostColor : userColor;
+      canvas
+        ..drawCircle(userAt, 22 * px, Paint()..color = c.withValues(alpha: .22))
+        ..drawCircle(userAt, 10 * px, Paint()..color = halo)
+        ..drawCircle(userAt, 7 * px, Paint()..color = c);
+    }
+
+    for (final entry in tags.entries) {
+      final p = layout.points[entry.key];
+      if (p == null) continue;
+      final tp = entry.value;
+      final w = tp.width * px * 0.62;
+      final h = tp.height * px * 0.62;
+      final box = RRect.fromRectAndRadius(
+        Rect.fromLTWH(
+          p.dx - w / 2 - 6 * px,
+          p.dy - 26 * px - h - 4 * px,
+          w + 12 * px,
+          h + 8 * px,
+        ),
+        Radius.circular(8 * px),
+      );
+      canvas
+        ..drawRRect(box, Paint()..color = tagBackground)
+        ..save()
+        ..translate(p.dx - w / 2, p.dy - 26 * px - h)
+        ..scale(px * 0.62);
+      tp.paint(canvas, Offset.zero);
+      canvas.restore();
+    }
+  }
+
+  @override
+  bool shouldRepaint(OverviewMarksPainter old) =>
+      old.layout != layout ||
+      old.fromId != fromId ||
+      old.toId != toId ||
+      old.highlightId != highlightId ||
+      old.user != user ||
+      old.tags.length != tags.length ||
+      old.fromColor != fromColor ||
+      old.halo != halo;
+}
+
+class OverviewLegend extends StatelessWidget {
+  const OverviewLegend({required this.snapshot, super.key});
 
   final MetroSnapshot snapshot;
 

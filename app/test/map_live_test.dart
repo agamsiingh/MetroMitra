@@ -6,6 +6,7 @@ import 'package:metro_core/metro_core.dart' hide Platform;
 import 'package:metromitra/bootstrap/bootstrap_providers.dart';
 import 'package:metromitra/features/map/application/live_tracking.dart';
 import 'package:metromitra/features/map/presentation/network_map.dart';
+import 'package:metromitra/features/map/presentation/overview_map.dart';
 import 'package:metromitra/shared/format/format.dart';
 import 'package:metromitra/shared/location/location_source.dart';
 
@@ -15,29 +16,28 @@ import 'support/test_network.dart';
 String _t(WidgetTester tester, String k) =>
     (tester.widget(key(k)) as Text).data ?? '';
 
-/// Circles the map canvas painted (position, radius, colour).
+/// Circles the map canvas painted (position, radius, colour), from the
+/// drawing and the marks laid over it.
 List<(Offset, double, Color)> _circles(WidgetTester tester) {
-  final render =
-      tester.renderObject(
-            find
-                .descendant(
-                  of: key('map-canvas'),
-                  matching: find.byType(CustomPaint),
-                )
-                .first,
-          )
-          as RenderCustomPaint;
-  final canvas = TestRecordingCanvas();
-  render.painter!.paint(canvas, render.size);
-  return [
-    for (final c in canvas.invocations)
-      if (c.invocation.memberName == #drawCircle)
-        (
+  final out = <(Offset, double, Color)>[];
+  for (final element
+      in find
+          .descendant(of: key('map-canvas'), matching: find.byType(CustomPaint))
+          .evaluate()) {
+    final render = element.renderObject! as RenderCustomPaint;
+    final canvas = TestRecordingCanvas();
+    render.painter!.paint(canvas, render.size);
+    for (final c in canvas.invocations) {
+      if (c.invocation.memberName == #drawCircle) {
+        out.add((
           c.invocation.positionalArguments[0] as Offset,
           c.invocation.positionalArguments[1] as double,
           (c.invocation.positionalArguments[2] as Paint).color,
-        ),
-  ];
+        ));
+      }
+    }
+  }
+  return out;
 }
 
 const _userBlue = Color(0xFF1A73E8);
@@ -241,8 +241,10 @@ void main() {
       await tester.tap(key('map-search-result-delta'));
       await tester.pumpAndSettle();
       expect(key('map-search-field'), findsNothing);
-      // the found station is ringed (radius 16)
-      expect(_circles(tester).any((c) => (c.$2 - 16).abs() < 0.01), isTrue);
+      // the found station is ringed and named over the map
+      final marks =
+          tester.renderObject(key('overview-marks')) as RenderCustomPaint;
+      expect((marks.painter! as OverviewMarksPainter).highlightId, 'delta');
     });
 
     testWidgets('Hindi and codes work; nothing found is said', (tester) async {
