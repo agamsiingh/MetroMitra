@@ -10,12 +10,12 @@ import 'support/app_harness.dart';
 import 'support/test_network.dart';
 
 /// The base drawing (lines, stations, labels) of the Map tab.
-OverviewPainter _drawing(WidgetTester tester) {
+OverviewPainter _drawing(WidgetTester tester, {String canvas = 'map-canvas'}) {
   final render =
       tester.renderObject(
             find
                 .descendant(
-                  of: key('map-canvas'),
+                  of: key(canvas),
                   matching: find.byType(CustomPaint),
                 )
                 .first,
@@ -37,8 +37,12 @@ Matrix4 _view(WidgetTester tester) => tester
     .value;
 
 /// Where a station is on screen right now (drawing point through the zoom).
-Offset _onScreen(WidgetTester tester, String id) {
-  final p = _drawing(tester).layout.points[id]!;
+Offset _onScreen(
+  WidgetTester tester,
+  String id, {
+  String canvas = 'map-canvas',
+}) {
+  final p = _drawing(tester, canvas: canvas).layout.points[id]!;
   return tester.getTopLeft(key('overview-viewer')) +
       MatrixUtils.transformPoint(_view(tester), p);
 }
@@ -300,6 +304,113 @@ void main() {
       expect(routerOf(c).state.uri.path, '/station/p777');
       // generous: guards against quadratic work, not machine speed
       expect(sw.elapsed, lessThan(const Duration(seconds: 60)));
+    });
+  });
+  group('route on the overall map', () {
+    const canvas = 'map-route-canvas';
+    const route = '/go/route/map?from=alpha&to=yankee';
+
+    /// Lines (colour, width) and circles (centre, radius) the drawing painted.
+    ({List<(Color, double)> lines, List<(Offset, double)> circles}) painted(
+      WidgetTester tester,
+    ) {
+      final render =
+          tester.renderObject(
+                find
+                    .descendant(
+                      of: key(canvas),
+                      matching: find.byType(CustomPaint),
+                    )
+                    .first,
+              )
+              as RenderCustomPaint;
+      final rec = TestRecordingCanvas();
+      render.painter!.paint(rec, render.size);
+      final lines = <(Color, double)>[];
+      final circles = <(Offset, double)>[];
+      for (final c in rec.invocations) {
+        final a = c.invocation.positionalArguments;
+        if (c.invocation.memberName == #drawLine) {
+          final paint = a[2] as Paint;
+          lines.add((paint.color, paint.strokeWidth));
+        } else if (c.invocation.memberName == #drawCircle) {
+          circles.add((a[0] as Offset, a[1] as double));
+        }
+      }
+      return (lines: lines, circles: circles);
+    }
+
+    testWidgets('uses the same overall map, every station still named', (
+      tester,
+    ) async {
+      await pumpApp(tester, location: route);
+      expect(key(canvas), findsOneWidget);
+      expect(key('overview-viewer'), findsOneWidget);
+      expect(key('map-zoom-in'), findsOneWidget);
+      final labels = _drawing(tester, canvas: canvas).layout.labels;
+      final named = {for (final l in labels) l.stationId};
+      // the route's stations and the ones off the route all carry names
+      expect(named, containsAll(['alpha', 'beta', 'central', 'yankee']));
+      expect(named.length, greaterThan(6));
+    });
+
+    testWidgets('ridden segments are thick in the line colour, the rest '
+        'faded', (tester) async {
+      await pumpApp(tester, location: route);
+      final r = painted(tester);
+      bool has(Color c, double w) => r.lines.any(
+        (l) => l.$1.toARGB32() == c.toARGB32() && l.$2 == w,
+      );
+      expect(has(const Color(0xFFC62828), 19), isTrue, reason: 'red ridden');
+      expect(has(const Color(0xFF1565C0), 19), isTrue, reason: 'blue ridden');
+      expect(
+        r.lines.any((l) => l.$1.a < 0.5 && l.$2 == 8),
+        isTrue,
+        reason: 'the rest of the network is faded',
+      );
+      expect(
+        r.lines.any((l) => l.$1.a == 1 && l.$2 == 11),
+        isFalse,
+        reason: 'nothing is drawn at the normal full-strength width',
+      );
+    });
+
+    testWidgets('the change station is ringed', (tester) async {
+      await pumpApp(tester, location: route);
+      final p = _drawing(tester, canvas: canvas).layout.points['central']!;
+      expect(
+        painted(tester).circles.any((c) => c.$1 == p && c.$2 == 27),
+        isTrue,
+      );
+      expect(key('map-legend-transfer'), findsOneWidget);
+      expect(key('map-legend-walk'), findsNothing);
+    });
+
+    testWidgets('the screen opens framed on the route, ends ringed', (
+      tester,
+    ) async {
+      await pumpApp(tester, location: route);
+      final box = tester.getRect(key('overview-viewer'));
+      for (final id in ['alpha', 'beta', 'central', 'yankee']) {
+        final p = _onScreen(tester, id, canvas: canvas);
+        expect(box.contains(p), isTrue, reason: '$id at $p inside $box');
+      }
+      final m = _marks(tester);
+      expect(m.fromId, 'alpha');
+      expect(m.toId, 'yankee');
+      expect(m.tags.keys, containsAll(['alpha', 'yankee']));
+    });
+
+    testWidgets('tapping a station on the route map opens its detail', (
+      tester,
+    ) async {
+      final c = await pumpApp(
+        tester,
+        location: '/go/route/map?from=alpha&to=delta',
+      );
+      await tester.tapAt(_onScreen(tester, 'beta', canvas: canvas));
+      await tester.pumpAndSettle();
+      expect(routerOf(c).state.uri.path, '/station/beta');
     });
   });
 }

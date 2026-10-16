@@ -5,6 +5,7 @@ import 'package:metro_core/metro_core.dart' hide Platform;
 import 'package:metromitra/app/l10n/generated/app_localizations.dart';
 import 'package:metromitra/app/theme/tokens.dart';
 import 'package:metromitra/features/go/application/station_options.dart';
+import 'package:metromitra/features/map/application/map_overlay.dart';
 import 'package:metromitra/features/map/presentation/network_map.dart';
 import 'package:metromitra/shared/format/format.dart';
 import 'package:metromitra/shared/widgets/line_chip.dart';
@@ -168,6 +169,7 @@ class OverviewPainter extends CustomPainter {
     required this.lineColors,
     required this.ink,
     required this.paper,
+    this.overlay,
   });
 
   final MapGeometry geometry;
@@ -176,25 +178,46 @@ class OverviewPainter extends CustomPainter {
   final Color ink;
   final Color paper;
 
+  /// A route to show: its segments are thick and the rest of the map is
+  /// faded (still named), so the route reads at a glance.
+  final MapOverlay? overlay;
+
   @override
   void paint(Canvas canvas, Size size) {
+    final o = overlay;
+    final onRoute = o?.routeStationIds.toSet();
     for (final seg in geometry.segments) {
       final a = layout.points[seg.fromId];
       final b = layout.points[seg.toId];
       if (a == null || b == null) continue;
+      final hit = o == null || o.highlightedSegments.contains(seg.key);
+      final color = lineColors[seg.lineId] ?? const Color(0xFF607D8B);
       canvas.drawLine(
         a,
         b,
         Paint()
-          ..color = lineColors[seg.lineId] ?? const Color(0xFF607D8B)
-          ..strokeWidth = 11
+          ..color = hit ? color : color.withValues(alpha: 0.22)
+          ..strokeWidth = o == null
+              ? 11
+              : hit
+              ? 19
+              : 8
           ..strokeCap = StrokeCap.round,
       );
+    }
+    if (o != null) {
+      for (final (from, to) in o.walks) {
+        final a = layout.points[from];
+        final b = layout.points[to];
+        if (a != null && b != null) _dashed(canvas, a, b, ink);
+      }
     }
     for (final s in geometry.stations) {
       final p = layout.points[s.id]!;
       final inter = s.lineIds.length > 1;
+      final dim = onRoute != null && !onRoute.contains(s.id);
       final r = inter ? 15.0 : 8.0;
+      final ringInk = dim ? ink.withValues(alpha: 0.35) : ink;
       canvas
         ..drawCircle(p, r, Paint()..color = paper)
         ..drawCircle(
@@ -203,12 +226,48 @@ class OverviewPainter extends CustomPainter {
           Paint()
             ..style = PaintingStyle.stroke
             ..strokeWidth = inter ? 5 : 3.5
+            ..color = ringInk,
+        );
+      if (inter) canvas.drawCircle(p, 4.5, Paint()..color = ringInk);
+    }
+    if (o != null) {
+      for (final id in o.transferStationIds) {
+        final p = layout.points[id];
+        if (p == null) continue;
+        canvas.drawCircle(
+          p,
+          27,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 6
             ..color = ink,
         );
-      if (inter) canvas.drawCircle(p, 4.5, Paint()..color = ink);
+      }
     }
     for (final l in layout.labels) {
-      l.painter.paint(canvas, l.offset);
+      if (onRoute == null || onRoute.contains(l.stationId)) {
+        l.painter.paint(canvas, l.offset);
+      } else {
+        canvas.saveLayer(
+          (l.offset & Size(l.painter.width, l.painter.height)).inflate(4),
+          Paint()..color = const Color(0x66000000),
+        );
+        l.painter.paint(canvas, l.offset);
+        canvas.restore();
+      }
+    }
+  }
+
+  static void _dashed(Canvas canvas, Offset a, Offset b, Color color) {
+    final total = (b - a).distance;
+    if (total == 0) return;
+    final dir = (b - a) / total;
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 7
+      ..strokeCap = StrokeCap.round;
+    for (var d = 0.0; d < total; d += 36) {
+      canvas.drawLine(a + dir * d, a + dir * math.min(d + 20, total), paint);
     }
   }
 
@@ -217,7 +276,8 @@ class OverviewPainter extends CustomPainter {
       old.layout != layout ||
       old.geometry != geometry ||
       old.ink != ink ||
-      old.paper != paper;
+      old.paper != paper ||
+      old.overlay != overlay;
 }
 
 /// The overall map: the whole network with every station named, pinch to
@@ -234,6 +294,7 @@ class OverviewMapView extends StatefulWidget {
     this.highlightId,
     this.focusId,
     this.user,
+    this.overlay,
     this.extraControls = const [],
     this.onStationTap,
     super.key,
@@ -255,6 +316,9 @@ class OverviewMapView extends StatefulWidget {
 
   /// Live position; centred once when the first fix arrives.
   final MapUser? user;
+
+  /// A route to show: framed on screen, highlighted, the rest faded.
+  final MapOverlay? overlay;
 
   /// Round buttons stacked above the zoom buttons (live location).
   final List<Widget> extraControls;
@@ -330,15 +394,30 @@ class _OverviewMapViewState extends State<OverviewMapView> {
   /// whenever the map is zoomed out).
   double get _scale => _transform.value.entry(0, 0);
 
+  /// What "fit" shows: the whole drawing, or just the route when one is set.
+  Rect _fitTarget(OverviewLayout layout) {
+    final ids = widget.overlay?.routeStationIds ?? const <String>[];
+    Rect? r;
+    for (final id in ids) {
+      final p = layout.points[id];
+      if (p == null) continue;
+      r = r == null
+          ? Rect.fromPoints(p, p)
+          : r.expandToInclude(Rect.fromPoints(p, p));
+    }
+    return r == null ? Offset.zero & layout.size : r.inflate(230);
+  }
+
   void _fit(OverviewLayout layout) {
-    final s = math.min(
-      _box.width / layout.size.width,
-      _box.height / layout.size.height,
-    );
+    final target = _fitTarget(layout);
+    final routeOnly = target.size != layout.size;
+    final s = math
+        .min(_box.width / target.width, _box.height / target.height)
+        .clamp(_minScale, routeOnly ? 1.0 : _maxScale);
     _transform.value = Matrix4.identity()
       ..translateByDouble(
-        (_box.width - layout.size.width * s) / 2,
-        (_box.height - layout.size.height * s) / 2,
+        _box.width / 2 - target.center.dx * s,
+        _box.height / 2 - target.center.dy * s,
         0,
         1,
       )
@@ -418,6 +497,9 @@ class _OverviewMapViewState extends State<OverviewMapView> {
     final tagged = {
       if (widget.highlightId != null) widget.highlightId!,
       if (widget.user?.nearestId != null) widget.user!.nearestId!,
+      // a shown route: its two ends always carry their names
+      if (widget.overlay != null && widget.fromId != null) widget.fromId!,
+      if (widget.overlay != null && widget.toId != null) widget.toId!,
     };
     return LayoutBuilder(
       builder: (context, box) {
@@ -460,6 +542,7 @@ class _OverviewMapViewState extends State<OverviewMapView> {
                             lineColors: lineColors,
                             ink: scheme.onSurface,
                             paper: scheme.surface,
+                            overlay: widget.overlay,
                           ),
                         ),
                         CustomPaint(
@@ -584,8 +667,8 @@ class OverviewMarksPainter extends CustomPainter {
         );
     }
 
-    ring(fromId, fromColor, 14);
-    ring(toId, toColor, 14);
+    ring(fromId, fromColor, 12);
+    ring(toId, toColor, 12);
     ring(highlightId, highlightColor, 18);
 
     final u = user;

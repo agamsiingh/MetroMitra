@@ -487,12 +487,13 @@ class RouteMapScreen extends ConsumerWidget {
           children: [
             _RouteSummary(itinerary: it, overlay: overlay, services: services),
             Expanded(
-              child: NetworkMap(
-                mapKey: const Key('map-route-canvas'),
+              child: OverviewMapView(
+                canvasKey: const Key('map-route-canvas'),
                 geometry: geometry,
                 snapshot: services.snapshot,
-                frame: frame,
                 overlay: overlay,
+                fromId: overlay.fromId,
+                toId: overlay.toId,
                 onStationTap: (id) => openStation(context, id),
               ),
             ),

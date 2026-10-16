@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:metro_core/metro_core.dart' hide Platform;
 import 'package:metromitra/features/map/application/map_camera.dart';
@@ -59,42 +58,6 @@ class Drawn {
         (c.$1 - at).distance < 0.5 &&
         (radius == null || (c.$2 - radius).abs() < 0.01),
   );
-}
-
-/// Paints the map canvas into a recording canvas.
-Drawn _paintOf(WidgetTester tester, String canvasKey) {
-  final render =
-      tester.renderObject(
-            find
-                .descendant(
-                  of: key(canvasKey),
-                  matching: find.byType(CustomPaint),
-                )
-                .first,
-          )
-          as RenderCustomPaint;
-  final canvas = TestRecordingCanvas();
-  render.painter!.paint(canvas, render.size);
-  return Drawn(canvas, tester.getTopLeft(key(canvasKey)));
-}
-
-/// Where a station is on screen, computed with the same maths as the map.
-Offset _where(
-  WidgetTester tester,
-  MapGeometry g,
-  MapRect frame,
-  String id, {
-  String canvasKey = 'map-canvas',
-}) {
-  final box = tester.getRect(key(canvasKey));
-  final v = MapViewport(
-    frame: frame,
-    width: box.width,
-    height: box.height,
-  );
-  final s = g.station(id)!;
-  final (bx, by) = v.toBase(s.x, s.y);
-  return box.topLeft + Offset(bx, by);
 }
 
 MetroSnapshot _withStations(
@@ -215,29 +178,6 @@ void main() {
       cam.zoomAbout(v, 0.0001, f.dx, f.dy);
       expect(cam.zoom, MapCamera.minZoom);
     });
-
-    testWidgets('selected route: framed on its stations', (tester) async {
-      await pumpApp(tester, location: '/go/route/map?from=alpha&to=beta');
-      final frame = geo.framingFor(['alpha', 'beta'])!;
-      final a = _where(
-        tester,
-        geo,
-        frame,
-        'alpha',
-        canvasKey: 'map-route-canvas',
-      );
-      final b = _where(
-        tester,
-        geo,
-        frame,
-        'beta',
-        canvasKey: 'map-route-canvas',
-      );
-      final box = tester.getRect(key('map-route-canvas'));
-      expect(box.contains(a), isTrue);
-      expect(box.contains(b), isTrue);
-      expect((a.dy + b.dy) / 2, closeTo(box.center.dy, 0.5));
-    });
   });
 
   group('route overlay (pure)', () {
@@ -305,40 +245,6 @@ void main() {
   });
 
   group('route on the map', () {
-    testWidgets('ridden segments are thick in the line colour, the rest '
-        'faded; stations on the route are bigger', (tester) async {
-      await pumpApp(tester, location: '/go/route/map?from=alpha&to=yankee');
-      final r = _paintOf(tester, 'map-route-canvas');
-      expect(r.hasLine(color: red, width: 7), isTrue);
-      expect(r.hasLine(color: blue, width: 7), isTrue);
-      // the rest of the red line is not on the route: dimmed
-      expect(r.hasLine(color: red.withValues(alpha: 0.25), width: 3), isTrue);
-      // lines of the route are never drawn thin and full-strength
-      expect(r.hasLine(color: red, width: 4), isFalse);
-      expect(r.hasLine(color: blue, width: 4), isFalse);
-    });
-
-    testWidgets('the change station is ringed', (tester) async {
-      await pumpApp(tester, location: '/go/route/map?from=alpha&to=yankee');
-      final frame = geo.framingFor(
-        ['alpha', 'beta', 'central', 'yankee'],
-      )!;
-      final c = _where(
-        tester,
-        geo,
-        frame,
-        'central',
-        canvasKey: 'map-route-canvas',
-      );
-      // interchange 6.5 + route 1.5 + ring 5
-      expect(
-        _paintOf(tester, 'map-route-canvas').hasCircle(c, radius: 13),
-        isTrue,
-      );
-      expect(key('map-legend-transfer'), findsOneWidget);
-      expect(key('map-legend-walk'), findsNothing);
-    });
-
     testWidgets('a walk between stations is shown only when in the route', (
       tester,
     ) async {
@@ -376,21 +282,6 @@ void main() {
       expect(routerOf(c).state.uri.path, '/go/route/map');
       expect(routerOf(c).state.uri.queryParameters['opt'], '1');
       expect(key('map-route-canvas'), findsOneWidget);
-    });
-
-    testWidgets('tapping a station on the route map opens its detail', (
-      tester,
-    ) async {
-      final c = await pumpApp(
-        tester,
-        location: '/go/route/map?from=alpha&to=delta',
-      );
-      final frame = geo.framingFor(['alpha', 'beta', 'central', 'delta'])!;
-      await tester.tapAt(
-        _where(tester, geo, frame, 'beta', canvasKey: 'map-route-canvas'),
-      );
-      await tester.pumpAndSettle();
-      expect(routerOf(c).state.uri.path, '/station/beta');
     });
   });
 

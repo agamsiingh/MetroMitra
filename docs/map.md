@@ -100,3 +100,9 @@ location (blue dot, nearest station panel; GPS stops when the tab is hidden), jo
 deep link, the DMRC PDF button, the legend. The separate "Overview map" screen and button are gone. The geographic
 `NetworkMap` is kept only for the route-on-map screen. A nearly straight network no longer shrinks the drawing to a
 speck (height is capped at 3x width and the drawing is centred).
+
+### Route on map (same day)
+"Show route on map" now uses the same overall map (every station named, English + Hindi) instead of the geographic
+one. The route is thick in its line colours, the rest of the network is faded but still named, change stations are
+ringed, walks are dashed links, the view opens framed on the route, and the two ends carry name tags. Tap a station
+for its page. `NetworkMap` is no longer used by any screen.
