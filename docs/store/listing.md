@@ -18,7 +18,7 @@ Important: MetroMitra is an independent app and is not affiliated with or endors
 Corporation (DMRC). Information can be incomplete or out of date; check station signs and official announcements.
 
 **Category:** Maps & Navigation  **Tags:** transit, metro, Delhi
-**Contact email / website / privacy URL:** to be filled in by the owner.
+**Developer:** Agam Singh. **Contact email:** agamcoder@gmail.com. **Privacy URL:** https://agamsiingh.github.io/MetroMitra/store/privacy-policy.html (live once GitHub Pages is on).
 
 ## Graphics still to produce (Play requires them)
 - App icon 512x512 PNG (the logo in `app/assets/brand/` can be exported).

@@ -22,7 +22,7 @@ Refresh the bundle before every release:
 1. Rebuild and bundle the release dataset (above). Open items in `docs/known-issues.md` (Pink Line 46 vs 45, Dhaula
    Kuan walkway, DMRC map licence) are worth fixing first.
 2. Spot-check Hindi names against station signage when possible (they come from Wikipedia).
-3. Fill the placeholders in `privacy-policy.html` and host it (for example GitHub Pages) at a public https URL.
+3. Turn on GitHub Pages (repo Settings → Pages → branch `main`, folder `/docs`). Privacy URL: https://agamsiingh.github.io/MetroMitra/store/privacy-policy.html
 4. Create the app in Play Console; fill Data safety and App content from `data-safety.md`; paste `listing.md`.
 5. Make the graphics listed in `listing.md`.
 6. Decide Supabase: leave the app without `METROMITRA_SUPABASE_*` for a fully offline app, or pass the URL and
